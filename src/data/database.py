@@ -1,4 +1,5 @@
 import os
+
 import mysql.connector
 from dotenv import load_dotenv
 from mysql.connector import Error
@@ -46,7 +47,6 @@ def initialize_database():
             
             connection.commit()
             print("Base de datos configurada correctamente.")
-           
         else:
             print("Error al intentar conectar a la base de datos.")
     
@@ -60,3 +60,4 @@ def initialize_database():
             connection.close()
 
 initialize_database()
+

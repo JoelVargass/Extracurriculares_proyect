@@ -1,0 +1,56 @@
+{% extends "templates/guest.html.jinja" %}
+
+{% block title %}Clubs List{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow-md rounded-lg p-6 overflow-x-scroll">
+    <div class="flex gap-5 items-center mb-4">
+        <h1 class="text-2xl font-bold">Lista de clubes</h1>
+        <a href="/clubs/create" class="bg-blue-500 text-white py-1 px-4 rounded text-sm">Nuevo</a>
+    </div>
+    {% if clubs %}
+        {% if clubs|length > 0 %}
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 text-left border-b-2 border-gray-300">ID</th>
+                        <th class="py-2 px-4 text-left border-b-2 border-gray-300">Nombre</th>
+                        <th class="py-2 px-4 text-left border-b-2 border-gray-300">Descripción</th>
+                        <th class="py-2 px-4 text-left border-b-2 border-gray-300">Categoría</th>
+                        <th class="py-2 px-4 text-left border-b-2 border-gray-300">Horarios</th>
+                        <th class="py-2 px-4 text-left border-b-2 border-gray-300">Asesor</th>
+                        <th class="py-2 px-4 text-left border-b-2 border-gray-300">Contacto</th>
+                        <th class="py-2 px-4 text-left border-b-2 border-gray-300">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for club in clubs %}
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ club.id }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">
+                                <a class="hover:underline" href="/clubs/{{ club.id }}">{{ club.club_name }}</a>
+                            </td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ club.description }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ club.category }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ club.init_hour }}-{{ club.finish_hour }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ club.teacher_name }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ club.teacher_email }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">
+                                <a href="/clubs/{{ club.id }}/edit" class="text-blue-500 hover:text-blue-700 mr-2">Editar</a> |
+                                <form action="/clubs/{{ club.id }}/delete" method="post" class="inline">
+                                    <input type="hidden" name="method" value="delete">
+                                    <button type="submit" class="text-red-500 hover:text-red-700 ml-2" onclick="return confirm('¿Estás seguro de que deseas eliminar este club?');">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-gray-700">No clubs found.</p>
+        {% endif %}
+    {% else %}
+        <p class="text-gray-700">No clubs found.</p>
+    {% endif %}
+</div>
+{% endblock %}
