@@ -9,11 +9,11 @@ from ..models.club import ClubRequest
 from ..utility.functions import format_errors
 
 router = APIRouter(
-    prefix="/clubs",
+    prefix="/dashboard/clubs",
     tags=["clubs"]
 )
 
-templates = Jinja2Templates(directory="src/pages")
+templates = Jinja2Templates(directory="src/pages/admin")
 current_year = datetime.now().year
 
 # Listar clubes
@@ -21,7 +21,7 @@ current_year = datetime.now().year
 async def list_clubs(request: Request, db: tuple = Depends(get_db_connection)):
     connection, cursor = db
     cursor.execute("""
-        SELECT clubs.id, clubs.club_name, clubs.description, clubs.init_hour, clubs.finish_hour, 
+        SELECT clubs.id, clubs.club_name, clubs.description, clubs.location, clubs.init_hour, clubs.finish_hour, 
         clubs.quota, clubs.teacher_name, clubs.teacher_email, categories.title AS category
         FROM clubs
         JOIN categories ON clubs.category_id = categories.id
@@ -46,19 +46,18 @@ async def save_club(request: Request, db: tuple = Depends(get_db_connection)):
         form_dict = {key: value for key, value in form_data.items()}
         connection, cursor = db
 
-        # Aquí deberías ajustar ClubRequest según tu implementación específica
         club_data = ClubRequest(**form_dict)
         
         cursor.execute("""
-            INSERT INTO clubs (club_name, description, init_hour, finish_hour, quota, teacher_name, teacher_email, category_id)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO clubs (club_name, description, location, init_hour, finish_hour, quota, teacher_name, teacher_email, category_id)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         """, (
-            club_data.club_name, club_data.description, club_data.init_hour, 
+            club_data.club_name, club_data.description, club_data.location, club_data.init_hour, 
             club_data.finish_hour, club_data.quota, club_data.teacher_name, 
             club_data.teacher_email, club_data.category_id
         ))
         connection.commit()
-        return RedirectResponse(url="/clubs", status_code=303)
+        return RedirectResponse(url="/dashboard/clubs", status_code=303)
     
     except ValidationError as e:
         error_messages = format_errors(e.errors(), ClubRequest)
@@ -81,7 +80,7 @@ async def save_club(request: Request, db: tuple = Depends(get_db_connection)):
 async def get_club(request: Request, club_id: int, db: tuple = Depends(get_db_connection)):
     connection, cursor = db
     cursor.execute("""
-        SELECT clubs.id, clubs.club_name, clubs.description, clubs.init_hour, clubs.finish_hour, 
+        SELECT clubs.id, clubs.club_name, clubs.description, clubs.location, clubs.init_hour, clubs.finish_hour, 
         clubs.quota, clubs.teacher_name, clubs.teacher_email, categories.title AS category
         FROM clubs
         JOIN categories ON clubs.category_id = categories.id
@@ -99,7 +98,7 @@ async def get_club(request: Request, club_id: int, db: tuple = Depends(get_db_co
 async def edit_club(request: Request, club_id: int, db: tuple = Depends(get_db_connection)):
     connection, cursor = db
     cursor.execute("""
-        SELECT clubs.id, clubs.club_name, clubs.description, clubs.init_hour, clubs.finish_hour, 
+        SELECT clubs.id, clubs.club_name, clubs.description, clubs.location, clubs.init_hour, clubs.finish_hour, 
         clubs.quota, clubs.teacher_name, clubs.teacher_email, categories.title AS category
         FROM clubs
         JOIN categories ON clubs.category_id = categories.id
@@ -123,22 +122,22 @@ async def update_club(request: Request, club_id: int, db: tuple = Depends(get_db
         club_data = ClubRequest(**form_dict)
         
         cursor.execute("""
-            UPDATE clubs SET club_name = %s, description = %s, init_hour = %s, 
+            UPDATE clubs SET club_name = %s, description = %s, location = %s, init_hour = %s, 
                 finish_hour = %s, quota = %s, teacher_name = %s, 
                 teacher_email = %s, category_id = %s
             WHERE id = %s
         """, (
-            club_data.club_name, club_data.description, club_data.init_hour, 
+            club_data.club_name, club_data.description, club_data.location, club_data.init_hour, 
             club_data.finish_hour, club_data.quota, club_data.teacher_name, 
             club_data.teacher_email, club_data.category_id, club_id
         ))
         connection.commit()
     
-        return RedirectResponse(url="/clubs", status_code=303)
+        return RedirectResponse(url="/dashboard/clubs", status_code=303)
     
     except ValidationError as e:
         cursor.execute("""
-            SELECT clubs.id, clubs.club_name, clubs.description, clubs.init_hour, clubs.finish_hour, 
+            SELECT clubs.id, clubs.club_name, clubs.description, clubs.location, clubs.init_hour, clubs.finish_hour, 
             clubs.quota, clubs.teacher_name, clubs.teacher_email, categories.title AS category
             FROM clubs
             JOIN categories ON clubs.category_id = categories.id
@@ -170,4 +169,4 @@ async def delete_club(club_id: int, method: str = Form(...), db: tuple = Depends
     cursor.execute("DELETE FROM clubs WHERE id = %s", (club_id,))
     connection.commit()
 
-    return RedirectResponse(url="/clubs", status_code=303)
+    return RedirectResponse(url="/dashboard/clubs", status_code=303)

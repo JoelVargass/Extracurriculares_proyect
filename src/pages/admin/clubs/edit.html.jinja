@@ -15,15 +15,18 @@
             </ul>
         </div>
     {% endif %}
-    <form method="post" action="/clubs/{{ club.id }}/edit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <input type="hidden" name="_method" value="put">
+    <form method="post" action="/dashboard/clubs/{{ club.id }}/edit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="club_name"><Nombre del club></label>
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="club_name">Nombre del club</label>
             <input name="club_name" id="club_name" value="{{ club.club_name }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Nombre del club">
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Descripción</label>
             <textarea name="description" id="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Descripción">{{ club.description }}</textarea>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="location">Ubicación</label>
+            <textarea name="location" id="location" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ubicación">{{ club.location }}</textarea>
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="init_hour">Hora de Inicio</label>
@@ -41,9 +44,9 @@
             <label class="block text-gray-700 text-sm font-bold mb-2" for="teacher_name">Nombre del profesor</label>
             <input name="teacher_name" id="teacher_name" value="{{ club.teacher_name }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Nombre del profesor">
         </div>
-       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="teacher_email">Correo del profesor</label>
-        <input name="teacher_email" id="teacher_email" value="{{ club.teacher_email }}"class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" placeholder="Correo del profesor" required>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="teacher_email">Correo del profesor</label>
+            <input name="teacher_email" id="teacher_email" value="{{ club.teacher_email }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" placeholder="Correo del profesor" required>
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="category_id">Categoría</label>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extracurriculares UT</title>
+    <link rel="icon" href="/img/ut-logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        @keyframes slide {
+            0% { margin-left: 0; }
+            20% { margin-left: 0; }
+            25% { margin-left: -100%; }
+            45% { margin-left: -100%; }
+            50% { margin-left: -200%; }
+            70% { margin-left: -200%; }
+            75% { margin-left: -300%; }
+            100% { margin-left: -300%; }
+        }
+
+        .slider_box ul {
+            animation: slide 20s infinite alternate ease-in-out;
+        }
+
+        .image-container img {
+            height: auto;
+            object-fit: cover;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+    {% include 'components/navbar.html' %}
+
+    <!-- Contenido principal -->
+    <header class="home">
+        <h1 class="text-4xl font-bold text-center py-4">¡Descubre nuestras actividades disponibles!</h1>
+        <div class="slider_principal">
+            <div class="slider_box w-[700px] overflow-hidden mx-auto my-12 rounded-3xl shadow-lg">
+                <ul class="flex p-0 w-[400%]">
+                    <li class="w-full relative">
+                        <div class="image-container p-[5px] box-border">
+                            <img src="/static/img/Ajedrez.jpg" alt="ajedrez" class="w-full rounded-3xl">
+                        </div>
+                    </li>
+                    <li class="w-full relative">
+                        <div class="image-container p-[5px] box-border">
+                            <img src="/static/img/basquetbol.jpg" alt="basquet" class="w-full rounded-3xl">
+                        </div>
+                    </li>
+                    <li class="w-full relative">
+                        <div class="image-container p-[5px] box-border">
+                            <img src="/static/img/folclor.jpg" alt="folclor" class="w-full rounded-3xl">
+                        </div>
+                    </li>
+                    <li class="w-full relative">
+                        <div class="image-container p-[5px] box-border">
+                            <img src="/static/img/futbol.jpg" alt="futbol" class="w-full rounded-3xl">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- CATEGORÍAS -->
+    <section>
+        <h2 class="titulo_centrado text-3xl font-bold text-[#4aa282] text-center my-12">CATEGORÍAS</h2>
+        <div class="conjunto_servicios grid grid-cols-1 md:grid-cols-3 gap-8 bg-gray-100 rounded-2xl p-8 mx-auto max-w-screen-xl">
+            <!-- Primer servicio -->
+            <a href="\user\culturales" class="block text-[#4aa282]">
+                <div class="servicio bg-white border border-gray-300 rounded-2xl shadow-lg transition-transform transform hover:scale-105 overflow-hidden text-center">
+                    <div class="img-s relative pb-[56.25%] overflow-hidden">
+                        <img src="/static/img/s-musica.jpg" alt="culturales" class="absolute w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-2xl text-[#4aa282] my-2">Culturales</h3>
+                    <p class="text-gray-800 px-8">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+            </a>
+            <!-- Segundo servicio -->
+            <a href="/pages/user/deportivos.html" class="block text-[#4aa282]">
+                <div class="servicio bg-white border border-gray-300 rounded-2xl shadow-lg transition-transform transform hover:scale-105 overflow-hidden text-center">
+                    <div class="img-s relative pb-[56.25%] overflow-hidden">
+                        <img src="/static/img/s-deportivos.jpg" alt="deportivos" class="absolute w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-2xl text-[#4aa282] my-2">Deportivos</h3>
+                    <p class="text-gray-800 px-8">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+            </a>
+            <!-- Tercer servicio -->
+            <a href="/pages/user/personalizados.html" class="block text-[#4aa282]">
+                <div class="servicio bg-white border border-gray-300 rounded-2xl shadow-lg transition-transform transform hover:scale-105 overflow-hidden text-center">
+                    <div class="img-s relative pb-[56.25%] overflow-hidden">
+                        <img src="/static/img/s-mecanografia.jpg" alt="personalizados" class="absolute w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-2xl text-[#4aa282] my-2">Personalizados</h3>
+                    <p class="text-gray-800 px-8">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+</body>
+</html>

@@ -3,7 +3,6 @@ from ..dependencies.database import get_db_connection
 from ..models.common import ApiResponse
 from ..models.user import UserRequest, UserListResponse, UserResponse
 from fastapi.responses import HTMLResponse, RedirectResponse
-from icecream import ic
 from fastapi.templating import Jinja2Templates
 from datetime import datetime
 from pydantic import ValidationError, EmailStr
@@ -11,27 +10,25 @@ from ..utility.functions import format_errors
 import re
 
 router = APIRouter(
-    prefix="/users",
+    prefix="/dashboard/users", 
     tags=["users"]
 )
 
-templates = Jinja2Templates(directory="src/pages")
+templates = Jinja2Templates(directory="src/pages/admin")
 current_year = datetime.now().year
+
+
 
 # Función para validar email
 def is_valid_email(email):
     if not email or not isinstance(email, str):
         return False
-
     try:
-        # Normalize the domain
-        email = re.sub(r'(@)(.+)$', domain_mapper, email, flags=re.IGNORECASE)
-
         def domain_mapper(match):
-            # Use idna encoding to convert Unicode domain names
             domain_name = match.group(2)
             return match.group(1) + domain_name.encode('idna').decode('utf-8')
-
+        
+        email = re.sub(r'(@)(.+)$', domain_mapper, email, flags=re.IGNORECASE)
     except Exception:
         return False
 
@@ -63,7 +60,7 @@ async def create_user(request: Request, db: tuple = Depends(get_db_connection)):
     return templates.TemplateResponse(request=request, name="users/create.html.jinja", context={"roles": roles, "current_year": current_year})
 
 # Guardar nuevo usuario
-@router.post('', response_class=HTMLResponse)
+@router.post("", response_class=HTMLResponse)
 async def save_user(request: Request, db: tuple = Depends(get_db_connection)):
     try:
         form_data = await request.form()
@@ -71,14 +68,13 @@ async def save_user(request: Request, db: tuple = Depends(get_db_connection)):
         connection, cursor = db
         
         form_data = UserRequest(**form_dict)
-        ic(form_data)
         
         cursor.execute(
             "INSERT INTO users (firstname, lastname, enrollment_number, email, password, contact, role_id) VALUES (%s, %s, %s, %s, %s, %s, %s)",
             (form_data.firstname, form_data.lastname, form_data.enrollment_number, form_data.email, form_data.password, form_data.contact, form_data.role_id)
         )
         connection.commit()
-        return RedirectResponse(url="/users", status_code=303)
+        return RedirectResponse(url="/dashboard/users", status_code=303)
     
     except ValidationError as e:
         cursor.execute("SELECT * FROM roles")
@@ -87,7 +83,6 @@ async def save_user(request: Request, db: tuple = Depends(get_db_connection)):
         error_messages = format_errors(e.errors(), UserRequest)
             
         return templates.TemplateResponse(request=request, name="users/create.html.jinja", context={"errors": error_messages, "roles": roles, "current_year": current_year})
-
 
 @router.get("/{user_id}/edit", response_class=HTMLResponse)
 async def edit_user(request: Request, user_id: int, db: tuple = Depends(get_db_connection)):
@@ -112,7 +107,6 @@ async def update_user(user_id: int, request: Request, db: tuple = Depends(get_db
         connection, cursor = db
         
         user_data = UserRequest(**form_dict)
-        ic(user_data.password)
 
         cursor.execute("""
             UPDATE users SET firstname = %s, lastname = %s, enrollment_number = %s, 
@@ -125,7 +119,7 @@ async def update_user(user_id: int, request: Request, db: tuple = Depends(get_db
         ))
         connection.commit()
         
-        return RedirectResponse(url=f"/users", status_code=303)
+        return RedirectResponse(url="/dashboard/users", status_code=303)
     
     except ValidationError as e:
         cursor.execute("""
@@ -147,7 +141,6 @@ async def update_user(user_id: int, request: Request, db: tuple = Depends(get_db
 # Eliminar usuario
 @router.post("/{user_id}/delete", response_class=HTMLResponse)
 async def delete_user(user_id: int, method: str = Form(...), db: tuple = Depends(get_db_connection)):
-    # Verificar que el método sea DELETE
     if method.lower() != "delete":
         return {"status": 400, "message": "Invalid request method"}
 
@@ -163,7 +156,7 @@ async def delete_user(user_id: int, method: str = Form(...), db: tuple = Depends
     cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
     connection.commit()
 
-    return RedirectResponse(url="/users", status_code=303)
+    return RedirectResponse(url="/dashboard/users", status_code=303)
 
 # Manejo de errores de validación
 @router.post("/handle_validation_error", response_class=HTMLResponse, include_in_schema=False)
@@ -182,3 +175,4 @@ async def handle_validation_error(request: Request, exc):
         },
         status_code=400
     )
+

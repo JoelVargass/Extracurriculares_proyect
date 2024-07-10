@@ -8,13 +8,15 @@ CREATE TABLE roles (
 CREATE TABLE categories (
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
-    description VARCHAR(255)
+    description VARCHAR(255),
+    image_path VARCHAR(255)
 );
 
 CREATE TABLE clubs (
     id INT PRIMARY KEY AUTO_INCREMENT,
     club_name VARCHAR(255) NOT NULL,
     description VARCHAR(255),
+    location VARCHAR(255),
     init_hour TIME NOT NULL,
     finish_hour TIME NOT NULL,
     quota INT NOT NULL,

@@ -11,6 +11,7 @@ class Model(BaseModel):
 class ClubRequest(Model):
     club_name: str = Field(..., title="Nombre del Club", description="El nombre del club", min_length=2, max_length=100)
     description: str = Field(..., title="Descripción", description="Una descripción breve del club", min_length=5, max_length=255)
+    location: str = Field(..., title="Ubicación", description="Ubicación del club", min_length=5, max_length=255)
     init_hour: time = Field(..., title="Hora de Inicio", description="La hora de inicio del club")
     finish_hour: time = Field(..., title="Hora de Fin", description="La hora de finalización del club")
     quota: int = Field(..., title="Cupo", description="El número máximo de participantes")
@@ -22,6 +23,7 @@ class ClubResponse(Model):
     id: int
     club_name: str
     description: str
+    location: str
     init_hour: time
     finish_hour: time
     quota: int

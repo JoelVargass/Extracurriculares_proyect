@@ -1,21 +1,22 @@
-from fastapi import APIRouter, Depends, Request, Form
+from fastapi import APIRouter, Depends, Request, Form, UploadFile, File
 from ..dependencies.database import get_db_connection
 from ..models.common import ApiResponse
 from ..models.categories import CategoryRequest, CategoryResponse, CategoryListResponse
 from fastapi.responses import HTMLResponse, RedirectResponse
-from icecream import ic
 from fastapi.templating import Jinja2Templates
 from datetime import datetime
 from fastapi.exceptions import RequestValidationError
 from pydantic import ValidationError
 from ..utility.functions import format_errors
+import shutil
+import os
 
 router = APIRouter(
-    prefix="/categories",
+    prefix="/dashboard/categories",
     tags=["categories"]
 )
 
-templates = Jinja2Templates(directory="src/pages")
+templates = Jinja2Templates(directory="src/pages/admin")
 current_year = datetime.now().year
 
 # Listar categorías
@@ -27,7 +28,6 @@ async def list_categories(request: Request, db: tuple = Depends(get_db_connectio
         FROM categories
     """)
     categories = cursor.fetchall()
-    ic(categories)
     return templates.TemplateResponse("categories/index.html.jinja", {"request": request, "categories": categories, "current_year": current_year})
 
 # Crear categoría (Formulario)
@@ -35,29 +35,46 @@ async def list_categories(request: Request, db: tuple = Depends(get_db_connectio
 async def create_category(request: Request):
     return templates.TemplateResponse("categories/create.html.jinja", {"request": request, "current_year": current_year})
 
-# Guardar nueva categoría
+# Guardar categoría
 @router.post('/create', response_class=HTMLResponse)
-async def save_category(request: Request, db: tuple = Depends(get_db_connection)):
+async def save_category(request: Request, file: UploadFile = File(...), db: tuple = Depends(get_db_connection)):
+    
     try:
         form_data = await request.form()
         form_dict = {key: value for key, value in form_data.items()}
         connection, cursor = db
 
         category_data = CategoryRequest(**form_dict)
-        
+
+        # Guardar la imagen en el servidor
+        if file:
+            upload_folder = f"src/data/store/categories/{category_data.title}"
+            os.makedirs(upload_folder, exist_ok=True)
+
+            file_location = os.path.join(upload_folder, file.filename)
+            
+            # Guardar la imagen
+            with open(file_location, "wb") as image:
+                shutil.copyfileobj(file.file, image)
+                
+            # Guardar la ruta de la imagen relativa en la base de datos
+            file_location = os.path.relpath(file_location, "src/data/store")
+
+        # Insertar datos de la categoría en la base de datos
         cursor.execute("""
-            INSERT INTO categories (title, description)
-            VALUES (%s, %s)
+            INSERT INTO categories (title, description, image_path)
+            VALUES (%s, %s, %s)
         """, (
-            category_data.title, category_data.description
+            category_data.title, category_data.description, file_location
         ))
         connection.commit()
-        return RedirectResponse(url="/categories", status_code=303)
-    
-    except ValidationError as e:
+
+        return RedirectResponse(url="/dashboard/categories", status_code=303)
+
+    except Exception as e:
         error_messages = format_errors(e.errors(), CategoryRequest)
         return templates.TemplateResponse(
-            "categories/create.html.jinja", 
+            "categories/create.html.jinja",
             {"request": request, "errors": error_messages, "current_year": current_year}
         )
 
@@ -79,7 +96,7 @@ async def get_category(request: Request, category_id: int, db: tuple = Depends(g
 async def edit_category(request: Request, category_id: int, db: tuple = Depends(get_db_connection)):
     connection, cursor = db
     cursor.execute("""
-        SELECT id, title, description
+        SELECT id, title, description, image_path
         FROM categories
         WHERE id = %s
     """, (category_id,))
@@ -89,27 +106,60 @@ async def edit_category(request: Request, category_id: int, db: tuple = Depends(
 
 # Actualizar categoría
 @router.post("/{category_id}", response_class=HTMLResponse)
-async def update_category(request: Request, category_id: int, db: tuple = Depends(get_db_connection)):
+async def update_category(
+    request: Request,
+    category_id: int,
+    db: tuple = Depends(get_db_connection),
+    file: UploadFile = File(None)
+):
     try:
         form_data = await request.form()
         form_dict = {key: value for key, value in form_data.items()}
         connection, cursor = db
 
+        # Actualizamos el CategoryRequest para no esperar un archivo en image_path
         category_data = CategoryRequest(**form_dict)
-        
+
+        # Obtener la ruta actual de la imagen
         cursor.execute("""
-            UPDATE categories SET title = %s, description = %s
+            SELECT image_path
+            FROM categories
+            WHERE id = %s
+        """, (category_id,))
+        current_image_path = cursor.fetchone()["image_path"]
+
+        # Manejar la nueva imagen si se proporciona
+        if file and file.filename:
+            upload_folder = f"src/data/store/categories/{category_data.title}"
+            os.makedirs(upload_folder, exist_ok=True)
+
+            new_file_location = os.path.join(upload_folder, file.filename)
+
+            # Guardar la nueva imagen
+            with open(new_file_location, "wb") as image:
+                shutil.copyfileobj(file.file, image)
+
+            # Eliminar la imagen anterior si existe
+            if current_image_path and os.path.exists(current_image_path):
+                os.remove(current_image_path)
+
+            new_file_location = os.path.relpath(new_file_location, "src/data/store")
+        else:
+            new_file_location = current_image_path
+
+        cursor.execute("""
+            UPDATE categories SET title = %s, description = %s, image_path = %s
             WHERE id = %s
         """, (
-            category_data.title, category_data.description, category_id
+            category_data.title, category_data.description, new_file_location, category_id
         ))
         connection.commit()
-    
-        return RedirectResponse(url="/categories", status_code=303)
-    
+
+        return RedirectResponse(url="/dashboard/categories", status_code=303)
+
     except ValidationError as e:
         cursor.execute("""
-            SELECT id, title, description
+            SELECT id, title, description, image_path
             FROM categories
             WHERE id = %s
         """, (category_id,))
@@ -117,11 +167,10 @@ async def update_category(request: Request, category_id: int, db: tuple = Depend
         error_messages = format_errors(e.errors(), CategoryRequest)
 
         return templates.TemplateResponse(
-            "categories/edit.html.jinja", 
+            "categories/edit.html.jinja",
             {"request": request, "errors": error_messages, "category": category, "current_year": current_year}
         )
-
-
+    
 # Eliminar categoría
 @router.post("/{category_id}/delete", response_class=HTMLResponse)
 async def delete_category(category_id: int, method: str = Form(...), db: tuple = Depends(get_db_connection)):
@@ -137,4 +186,4 @@ async def delete_category(category_id: int, method: str = Form(...), db: tuple =
     cursor.execute("DELETE FROM categories WHERE id = %s", (category_id,))
     connection.commit()
 
-    return RedirectResponse(url="/categories", status_code=303)
+    return RedirectResponse(url="/dashboard/categories", status_code=303)

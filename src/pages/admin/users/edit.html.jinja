@@ -15,7 +15,7 @@
             </ul>
         </div>
     {% endif %}
-    <form action="/users/{{ user.id }}/edit" method="POST">
+    <form action="/dashboard/users/{{ user.id }}/edit" method="POST">
         <input type="hidden" name="_method" value="PUT">
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname">Nombres</label>
