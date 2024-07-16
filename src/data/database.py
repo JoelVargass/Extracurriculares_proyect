@@ -59,8 +59,6 @@ def initialize_database():
             cursor.close()
             connection.close()
 
-initialize_database()
-
 def get_db():
     connection = mysql.connector.connect(
         host=os.getenv("DB_HOST"),
@@ -73,3 +71,5 @@ def get_db():
 
 def close_db(connection):
     connection.close()
+    
+initialize_database()
