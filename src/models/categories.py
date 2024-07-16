@@ -4,8 +4,7 @@ from typing import Optional
 
 class Model(BaseModel):
     model_config = ConfigDict(
-        str_strip_whitespace=True,
-        str_to_lower=True
+        str_strip_whitespace=True
     )
 
 class CategoryRequest(BaseModel):

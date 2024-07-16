@@ -61,3 +61,15 @@ def initialize_database():
 
 initialize_database()
 
+def get_db():
+    connection = mysql.connector.connect(
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
+    )
+    cursor = connection.cursor(dictionary=True)
+    return connection, cursor
+
+def close_db(connection):
+    connection.close()

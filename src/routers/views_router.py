@@ -7,7 +7,6 @@ router = APIRouter(
     tags=["user"]
 )
 
-# Configuración de Jinja2Templates para las páginas de usuario
 templates = Jinja2Templates(directory="src/pages/user")
 
 # Rutas para las vistas de usuario
@@ -27,6 +26,7 @@ async def personalized_page(request: Request):
 async def support_page(request: Request):
     return templates.TemplateResponse("support.html", {"request": request})
 
-@router.get("/login", response_class=HTMLResponse)
-async def login_page(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+@router.get("/submit_registration_form", response_class=HTMLResponse)
+async def submit_registration_form(request: Request):
+    return templates.TemplateResponse("formulario.html.jinja", {"request": request})
+

@@ -1,164 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Extracurriculares UT</title>
     <link rel="icon" href="/img/ut-logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+    <style>
+        /* Mantenemos las queries de medios y estilos personalizados */
+        @media screen and (max-width: 375px) {
+            .section {
+                flex-direction: column;
+            }
+
+            .cart {
+                position: static;
+                order: -1;
+                margin-bottom: 1rem;
+                width: 100%;
+            }
+
+            .activities {
+                width: 100%;
+            }
+        }
+
+        @media screen and (min-width: 376px) {
+            .cart {
+                position: relative;
+                order: 0;
+                width: 50%;
+            }
+
+            .activities {
+                width: 50%;
+            }
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-gray-100">
+
+    {% include 'components/navbar.html' %}
+
     <!-- HEADER-->
-    <main class="hero">
-        <h2>ACTIVIDADES CULTURALES</h2>
+    <main
+        class="relative flex items-center justify-center bg-cover bg-center bg-no-repeat rounded-xl h-80 my-14 mx-6 sm:mx-4"
+        style="background-image: url('/img/pintura_cultural-s.jpg');">
+        <div class="absolute inset-0 bg-black opacity-50 rounded-xl"></div>
+        <h2 class="relative text-white text-4xl sm:text-2xl">ACTIVIDADES CULTURALES</h2>
     </main>
 
     <!--SECTION-->
-    <section class="contenedor">
-        <div id="root" class="contenedor-items"></div>
-        <!-- CONTENEDOR DE EXTRACURRICULAR ELEGIDO-->
-        <div class="carrito">
-            <div id="cartItem" class="carrito-contenido">
-            </div>
-
+    <section
+        class="section flex flex-col sm:flex-row items-start p-8 h-auto bg-white rounded-xl shadow-lg m-4 relative overflow-hidden sm:p-4">
+        <div id="root" class="activities pt-8 w-full sm:w-1/2"></div>
+        <div id="cartItem"
+            class="cart flex flex-col items-center justify-center p-8 bg-white rounded-xl shadow-lg w-full sm:w-1/2 h-auto m-2 overflow-hidden sm:p-4">
         </div>
     </section>
+
     <script>
         const activities = [
-    {
-        id: 0,
-        image: '/img/a-foto.jpg',
-        title: 'Fotografía Digital',
-        description: 'Aprende las técnicas básicas de la fotografía digital.',
-        horario: '12-1pm',
-        maestro: 'Juan Manolo',
-        contacto: 'example@example.com'
-    },
-    {
-        id: 1,
-        image: '/img/a-musica.jpg',
-        title: 'Música',
-        description: 'Curso de instrumentos musicales y teoría musical.',
-        horario: '2-3pm',
-        maestro: 'Ana Gómez',
-        contacto: 'ana@example.com'
-    },
-    {
-        id: 2,
-        image: '/img/a-canto.jpg',
-        title: 'Canto y Coro',
-        description: 'Clases de canto y formación de coros.',
-        horario: '3-4pm',
-        maestro: 'Pedro Pérez',
-        contacto: 'pedro@example.com'
-    },
-    {
-        id: 3,
-        image: '/img/a-danza.jpg',
-        title: 'Danza',
-        description: 'Aprende los bailes tradicionales y modernos.',
-        horario: '4-5pm',
-        maestro: 'Laura Sánchez',
-        contacto: 'laura@example.com'
-    },
-    {
-        id: 4,
-        image: '/img/a-pintura.jpg',
-        title: 'Dibujo y Pintura',
-        description: 'Técnicas de dibujo y pintura para todas las edades.',
-        horario: '5-6pm',
-        maestro: 'Carlos Ruiz',
-        contacto: 'carlos@example.com'
-    },
-    {
-        id: 5,
-        image: '/img/a-oratoria.jpg',
-        title: 'Oratoria',
-        description: 'Desarrolla tus habilidades de expresión verbal.',
-        horario: '6-7pm',
-        maestro: 'Marta Díaz',
-        contacto: 'marta@example.com'
-    }
-];
+            {
+                id: 0,
+                image: '/img/a-foto.jpg',
+                title: 'Fotografía Digital',
+                description: 'Aprende las técnicas básicas de la fotografía digital.',
+                horario: '12-1pm',
+                maestro: 'Juan Manolo',
+                contacto: 'example@example.com'
+            },
+            {
+                id: 1,
+                image: '/img/a-musica.jpg',
+                title: 'Música',
+                description: 'Curso de instrumentos musicales y teoría musical.',
+                horario: '2-3pm',
+                maestro: 'Ana Gómez',
+                contacto: 'ana@example.com'
+            },
+            {
+                id: 2,
+                image: '/img/a-canto.jpg',
+                title: 'Canto y Coro',
+                description: 'Clases de canto y formación de coros.',
+                horario: '3-4pm',
+                maestro: 'Pedro Pérez',
+                contacto: 'pedro@example.com'
+            },
+            {
+                id: 3,
+                image: '/img/a-danza.jpg',
+                title: 'Danza',
+                description: 'Aprende los bailes tradicionales y modernos.',
+                horario: '4-5pm',
+                maestro: 'Laura Sánchez',
+                contacto: 'laura@example.com'
+            },
+            {
+                id: 4,
+                image: '/img/a-pintura.jpg',
+                title: 'Dibujo y Pintura',
+                description: 'Técnicas de dibujo y pintura para todas las edades.',
+                horario: '5-6pm',
+                maestro: 'Carlos Ruiz',
+                contacto: 'carlos@example.com'
+            },
+            {
+                id: 5,
+                image: '/img/a-oratoria.jpg',
+                title: 'Oratoria',
+                description: 'Desarrolla tus habilidades de expresión verbal.',
+                horario: '6-7pm',
+                maestro: 'Marta Díaz',
+                contacto: 'marta@example.com'
+            }
+        ];
 
-// Obtener el contenedor de actividades
-const root = document.getElementById('root');
+        // Obtener el contenedor de actividades
+        const root = document.getElementById('root');
 
-// Renderizar actividades en el contenedor
-root.innerHTML = activities.map(activity => `
-    <div class="item">
-        <button class="titulo-item" onclick="viewActivity(${activity.id})">${activity.title}</button>
-    </div>
-`).join('');
-
-// Inicializar carrito
-var cart = activities[0];
-
-viewActivity(cart.id);
-
-// Función para visualizar detalles de la actividad seleccionada
-function viewActivity(id) {
-    const activity = activities.find(activity => activity.id === id);
-
-    document.getElementById('cartItem').innerHTML = `
-        <h2 class="carrito-titulo">${activity.title}</h2>
-        <div class="carrito-info">
-            <img src="${activity.image}" alt="${activity.title}" class="carrito-imagen">
-            <p class="descripcion">${activity.description}</p>
-            <span class="horario">Horario: ${activity.horario}</span><br>
-            <span class="maestro">Maestro: ${activity.maestro}</span><br>
-            <span class="contacto">Contacto: ${activity.contacto}</span>
-        </div>
-        <div class="inscribir">
-            <button class="btn-inscribir" onclick="addToCart(${id})">Inscribirme</button>
-        </div>
-    `;
-}
-
-// Función para añadir actividad al carrito
-function addToCart(id) {
-    cart = activities.find(activity => activity.id === id);
-    updateCart();
-    window.location.href = '/assets/formulario.html';
-}
-
-// Función para actualizar la visualización del carrito
-function updateCart() {
-    const count = document.getElementById('count');
-    const cartItem = document.getElementById('cartItem');
-
-    if (cart) {
-        cartItem.innerHTML = `
-            <h2 class="carrito-titulo">${cart.title}</h2>
-            <div class="carrito-info">
-                <img src="${cart.image}" alt="${cart.title}" class="carrito-imagen">
-                <p class="descripcion">${cart.description}</p>
-                <span class="horario">Horario: ${cart.horario}</span><br>
-                <span class="maestro">Maestro: ${cart.maestro}</span><br>
-                <span class="contacto">Contacto: ${cart.contacto}</span>
+        // Renderizar actividades en el contenedor
+        root.innerHTML = activities.map(activity => `
+            <div class="item">
+                <button class="titulo-item text-xl my-4 bg-white border-0 hover:text-[#4aa282] transform hover:scale-105 transition duration-300 cursor-pointer" onclick="viewActivity(${activity.id})">${activity.title}</button>
             </div>
-            <div class="inscribir">
-                <button class="btn-inscribir" onclick="removeFromCart()"></button>
-            </div>
-        `;
-    } else {
-        count.innerText = 0;
-        cartItem.innerHTML = '<p>No hay actividades seleccionadas</p>';
-    }
-}
+        `).join('');
 
-// Función para eliminar la actividad del carrito
-function removeFromCart() {
-    cart = null;
-    updateCart();
-}
+        // Inicializar carrito
+        var cart = activities[0];
 
+        viewActivity(cart.id);
+
+        // Función para visualizar detalles de la actividad seleccionada
+        function viewActivity(id) {
+            const activity = activities.find(activity => activity.id === id);
+
+            document.getElementById('cartItem').innerHTML = `
+                <div class="carrito-titulo text-2xl text-center my-2">${activity.title}</div>
+                <img src="${activity.image}" alt="${activity.title}" class="w-full max-w-xs h-64 object-cover rounded-2xl sm:w-[20rem] sm:h-[150px]">
+                <div class="carrito-info w-full flex flex-col items-center text-center mt-4 pb-8">
+                    <p class="descripcion mt-4">${activity.description}</p>
+                    <span class="horario mt-2">Horario: ${activity.horario}</span><br>
+                    <span class="maestro">Maestro: ${activity.maestro}</span><br>
+                    <span class="contacto">Contacto: ${activity.contacto}</span>
+                </div>
+                <div class="inscribir flex items-center justify-center mt-4">
+                    <button class="btn-inscribir flex justify-center items-center p-2 bg-[#4aa282] text-white rounded-xl cursor-pointer text-xl hover:bg-[#3b8265]" onclick="addToCart(${id})">Inscribirme</button>
+                </div>
+            `;
+        }
+
+        // Función para añadir actividad al carrito
+        function addToCart(id) {
+            cart = activities.find(activity => activity.id === id);
+            updateCart();
+            window.location.href = '/user/submit_registration_form';
+        }
+
+        // Función para actualizar la visualización del carrito
+        function updateCart() {
+            const count = document.getElementById('count');
+            const cartItem = document.getElementById('cartItem');
+
+            if (cart) {
+                cartItem.innerHTML = `
+                    <div class="carrito-titulo text-2xl text-center my-2">${cart.title}</div>
+                    <img src="${cart.image}" alt="${cart.title}" class="w-full max-w-xs h-64 object-cover rounded-2xl sm:w-[20rem] sm:h-[150px]">
+                    <div class="carrito-info w-full flex flex-col items-center text-center mt-4 pb-8">
+                        <p class="descripcion mt-4">${cart.description}</p>
+                        <span class="horario mt-2">Horario: ${cart.horario}</span><br>
+                        <span class="maestro">Maestro: ${cart.maestro}</span><br>
+                        <span class="contacto">Contacto: ${cart.contacto}</span>
+                    </div>
+                    <div class="inscribir flex items-center justify-center mt-4">
+                        <button class="btn-inscribir flex justify-center items-center p-2 bg-[#4aa282] text-white rounded-xl cursor-pointer text-xl hover:bg-[#3b8265]"</button>
+                    </div>
+                `;
+            } else {
+                count.innerText = 0;
+                cartItem.innerHTML = '<p>No hay actividades seleccionadas</p>';
+            }
+        }
     </script>
 </body>
 
