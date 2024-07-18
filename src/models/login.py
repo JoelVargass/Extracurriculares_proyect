@@ -7,7 +7,7 @@ class Model(BaseModel):
     )
 
 class LoginRequest(BaseModel):
-    email: EmailStr = Field(..., title="email de usuario", min_length=5, max_length=255)
+    enrollment_number: str = Field(..., title="Matrícula", description="The user's enrollment number", min_length=8, max_length=8)
     password: str = Field(..., title="password", min_length=8, max_length=20)
 
 class UserCreate(BaseModel):
@@ -38,5 +38,5 @@ class Token(BaseModel):
     token_type: str
 
 class TokenData(BaseModel):
-    email: str = None
+    enrollment_number: str = None
     role_id: int = None

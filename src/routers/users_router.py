@@ -17,8 +17,6 @@ router = APIRouter(
 templates = Jinja2Templates(directory="src/pages/admin")
 current_year = datetime.now().year
 
-
-
 # Función para validar email
 def is_valid_email(email):
     if not email or not isinstance(email, str):
@@ -175,4 +173,3 @@ async def handle_validation_error(request: Request, exc):
         },
         status_code=400
     )
-
