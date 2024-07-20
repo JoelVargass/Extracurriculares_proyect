@@ -59,126 +59,39 @@
     </section>
 
     <script>
-const activities = [
-    {
-        id: 0,
-        image: '/img/a-ajedrez.jpg',
-        title: 'Ajedrez',
-        description: 'Aprende las técnicas básicas de la fotografía digital.',
-        horario: '12-1pm',
-        maestro: 'Juan Manolo',
-        contacto: 'example@example.com'
-    },
-    {
-        id: 1,
-        image: '/img/a-atletismo.jpg',
-        title: 'Atletismo',
-        description: 'Curso de instrumentos musicales y teoría musical.',
-        horario: '2-3pm',
-        maestro: 'Ana Gómez',
-        contacto: 'ana@example.com'
-    },
-    {
-        id: 2,
-        image: '/img/a-basketfem.jpg',
-        title: 'Basquetbol Femenil',
-        description: 'Clases de canto y formación de coros.',
-        horario: '3-4pm',
-        maestro: 'Pedro Pérez',
-        contacto: 'pedro@example.com'
-    },
-    {
-        id: 3,
-        image: '/img/a-basketmas.jpg',
-        title: 'Basquetbol Varonil',
-        description: 'Aprende los bailes tradicionales y modernos.',
-        horario: '4-5pm',
-        maestro: 'Laura Sánchez',
-        contacto: 'laura@example.com'
-    },
-    {
-        id: 4,
-        image: '/img/a-flag.jpg',
-        title: 'Flag Mixto',
-        description: 'Técnicas de dibujo y pintura para todas las edades.',
-        horario: '5-6pm',
-        maestro: 'Carlos Ruiz',
-        contacto: 'carlos@example.com'
-    },
-    {
-        id: 5,
-        image: '/img/a-futfem.jpg',
-        title: 'Futbol Femenil',
-        description: 'Desarrolla tus habilidades de expresión verbal.',
-        horario: '6-7pm',
-        maestro: 'Marta Díaz',
-        contacto: 'marta@example.com'
-    },
-    {
-        id: 6,
-        image: '/img/a-futvar.jpg',
-        title: 'Futbol Varonil',
-        description: 'Desarrolla tus habilidades de expresión verbal.',
-        horario: '6-7pm',
-        maestro: 'Marta Díaz',
-        contacto: 'marta@example.com'
-    },
-    {
-        id: 7,
-        image: '/img/a-taekwondo.jpg',
-        title: 'Tae Kwon Do',
-        description: 'Desarrolla tus habilidades de expresión verbal.',
-        horario: '6-7pm',
-        maestro: 'Marta Díaz',
-        contacto: 'marta@example.com'
-    },
-    {
-        id: 8,
-        image: '/img/a-tenismesa.jpg',
-        title: 'Tenis de Mesa',
-        description: 'Desarrolla tus habilidades de expresión verbal.',
-        horario: '6-7pm',
-        maestro: 'Marta Díaz',
-        contacto: 'marta@example.com'
-    },
-    {
-        id: 9,
-        image: '/img/a-voleibol.jpg',
-        title: 'Voleibol',
-        description: 'Desarrolla tus habilidades de expresión verbal.',
-        horario: '6-7pm',
-        maestro: 'Marta Díaz',
-        contacto: 'marta@example.com'
-    }
-];
+        async function fetchClubs() {
+            const response = await fetch('/api/clubs');
+            const clubs = await response.json();
+            return clubs.filter(club => club.category_id === 2);
+        }
 
-        // Obtener el contenedor de actividades
-        const root = document.getElementById('root');
+        async function renderClubs() {
+            const clubs = await fetchClubs();
+            const root = document.getElementById('root');
 
-        // Renderizar actividades en el contenedor
-        root.innerHTML = activities.map(activity => `
-            <div class="item">
-                <button class="titulo-item text-xl my-4 bg-white border-0 hover:text-[#4aa282] transform hover:scale-105 transition duration-300 cursor-pointer" onclick="viewActivity(${activity.id})">${activity.title}</button>
-            </div>
-        `).join('');
+            root.innerHTML = clubs.map(club => `
+                <div class="item">
+                    <button class="titulo-item text-xl my-4 bg-white border-0 hover:text-[#4aa282] transform hover:scale-105 transition duration-300 cursor-pointer" onclick="viewActivity(${club.id})">${club.club_name}</button>
+                </div>
+            `).join('');
 
-        // Inicializar carrito
-        var cart = activities[0];
+            if (clubs.length > 0) {
+                viewActivity(clubs[0].id);
+            }
+        }
 
-        viewActivity(cart.id);
-
-        // Función para visualizar detalles de la actividad seleccionada
-        function viewActivity(id) {
-            const activity = activities.find(activity => activity.id === id);
+        async function viewActivity(id) {
+            const clubs = await fetchClubs();
+            const club = clubs.find(club => club.id === id);
 
             document.getElementById('cartItem').innerHTML = `
-                <div class="carrito-titulo text-2xl text-center my-2">${activity.title}</div>
-                <img src="${activity.image}" alt="${activity.title}" class="w-full max-w-xs h-64 object-cover rounded-2xl sm:w-[20rem] sm:h-[150px]">
+                <div class="carrito-titulo text-2xl text-center my-2">${club.club_name}</div>
+                <img src="${club.image_path}" alt="${club.club_name}" class="w-full max-w-xs h-64 object-cover rounded-2xl sm:w-[20rem] sm:h-[150px]">
                 <div class="carrito-info w-full flex flex-col items-center text-center mt-4 pb-8">
-                    <p class="descripcion mt-4">${activity.description}</p>
-                    <span class="horario mt-2">Horario: ${activity.horario}</span><br>
-                    <span class="maestro">Maestro: ${activity.maestro}</span><br>
-                    <span class="contacto">Contacto: ${activity.contacto}</span>
+                    <p class="descripcion mt-4">${club.description}</p>
+                    <span class="horario mt-2">Horario: ${club.init_hour} - ${club.finish_hour}</span><br>
+                    <span class="maestro">Maestro: ${club.teacher_name}</span><br>
+                    <span class="contacto">Contacto: ${club.teacher_email}</span>
                 </div>
                 <div class="inscribir flex items-center justify-center mt-4">
                     <button class="btn-inscribir flex justify-center items-center p-2 bg-[#4aa282] text-white rounded-xl cursor-pointer text-xl hover:bg-[#3b8265]" onclick="addToCart(${id})">Inscribirme</button>
@@ -186,37 +99,11 @@ const activities = [
             `;
         }
 
-        // Función para añadir actividad al carrito
         function addToCart(id) {
-            cart = activities.find(activity => activity.id === id);
-            updateCart();
-            window.location.href = '/user/submit_registration_form';
+            window.location.href = `/user/submit_registration_form?club_id=${id}`;
         }
 
-        // Función para actualizar la visualización del carrito
-        function updateCart() {
-            const count = document.getElementById('count');
-            const cartItem = document.getElementById('cartItem');
-
-            if (cart) {
-                cartItem.innerHTML = `
-                    <div class="carrito-titulo text-2xl text-center my-2">${cart.title}</div>
-                    <img src="${cart.image}" alt="${cart.title}" class="w-full max-w-xs h-64 object-cover rounded-2xl sm:w-[20rem] sm:h-[150px]">
-                    <div class="carrito-info w-full flex flex-col items-center text-center mt-4 pb-8">
-                        <p class="descripcion mt-4">${cart.description}</p>
-                        <span class="horario mt-2">Horario: ${cart.horario}</span><br>
-                        <span class="maestro">Maestro: ${cart.maestro}</span><br>
-                        <span class="contacto">Contacto: ${cart.contacto}</span>
-                    </div>
-                    <div class="inscribir flex items-center justify-center mt-4">
-                        <button class="btn-inscribir flex justify-center items-center p-2 bg-[#4aa282] text-white rounded-xl cursor-pointer text-xl hover:bg-[#3b8265]"</button>
-                    </div>
-                `;
-            } else {
-                count.innerText = 0;
-                cartItem.innerHTML = '<p>No hay actividades seleccionadas</p>';
-            }
-        }
+        document.addEventListener('DOMContentLoaded', renderClubs);
     </script>
 </body>
 

@@ -1,6 +1,9 @@
--- CREAR OTRAS TABLAS
-
 CREATE TABLE roles (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE university_degrees (
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL
 );
@@ -31,12 +34,36 @@ CREATE TABLE users (
     firstname VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
+    institutional_email VARCHAR(100) NOT NULL,
+    curp VARCHAR(18) NOT NULL,
+    date_of_birth DATE NOT NULL,
+    nationality VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL,
     contact VARCHAR(255) NOT NULL,
     role_id INT NOT NULL,
     club_id INT,
+    degree_id INT NOT NULL,
     FOREIGN KEY (role_id) REFERENCES roles(id),
+    FOREIGN KEY (club_id) REFERENCES clubs(id),
+    FOREIGN KEY (degree_id) REFERENCES university_degrees(id)
+);
+
+CREATE TABLE enrollments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL UNIQUE,
+    club_id INT,
+    cuatri VARCHAR(10) NOT NULL,
+    group_number VARCHAR(10) NOT NULL,
+    tutor_name VARCHAR(255) NOT NULL,
+    seguro_social VARCHAR(20) NOT NULL,
+    blood_type VARCHAR(10),
+    medical_conditions VARCHAR(200),
+    emergency_contact_name VARCHAR(255) NOT NULL,
+    emergency_contact_phone VARCHAR(255) NOT NULL,
+    contact_relationship VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (club_id) REFERENCES clubs(id)
 );
 
 INSERT INTO roles (title) VALUES ('admin'), ('student');
+

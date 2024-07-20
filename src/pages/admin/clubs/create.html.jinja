@@ -15,7 +15,7 @@
             </ul>
         </div>
     {% endif %}
-    <form action="/dashboard/clubs/create" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form action="/dashboard/clubs/create" method="post" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="club_name">Nombre del club</label>
             <input name="club_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Nombre del club" required>
@@ -24,7 +24,7 @@
             <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Descripción</label>
             <input name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Descripción" required>
         </div>
-         <div class="mb-4">
+        <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="location">Ubicación</label>
             <input name="location" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Ubicación" required>
         </div>
@@ -42,13 +42,12 @@
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="teacher_name">Nombre de profesor</label>
-            <input name="teacher_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Nombre deL profesor" required>
+            <input name="teacher_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Nombre del profesor" required>
         </div>
         <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="teacher_email">Correo del profesor</label>
-        <input name="teacher_email" id="teacher_email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" placeholder="Correo del profesor" required>
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="teacher_email">Correo del profesor</label>
+            <input name="teacher_email" id="teacher_email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" placeholder="Correo del profesor" required>
         </div>
-
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="category_id">Categoría</label>
             <select name="category_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
@@ -56,6 +55,10 @@
                     <option value="{{ category.id }}">{{ category.title }}</option>
                 {% endfor %}
             </select>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="image">Imagen</label>
+            <input name="image" id="image" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="file" accept="image/*">
         </div>
         <div class="flex items-center justify-between">
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">

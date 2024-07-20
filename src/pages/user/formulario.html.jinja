@@ -1,152 +1,37 @@
-{% block title %}Formulario de Inscripción{% endblock %}
+<!-- src/pages/user/formulario.html.jinja -->
 
 {% block content %}
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold mb-6">Formulario de Inscripción</h1>
+<div class="container mx-auto mt-8">
+    <h2 class="text-2xl font-bold mb-4">Formulario de Inscripción a Club</h2>
+    <form action="/user/inscription" method="post" class="max-w-md">
+        <div class="mb-4">
+            <label for="user_id" class="block text-sm font-medium text-gray-700">ID de Usuario</label>
+            <input type="text" id="user_id" name="user_id" placeholder="Ingrese el ID de usuario" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div class="mb-4">
+            <label for="club_id" class="block text-sm font-medium text-gray-700">ID de Club</label>
+            <input type="text" id="club_id" name="club_id" placeholder="Ingrese el ID de club" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div class="mb-4">
+            <label for="nivel" class="block text-sm font-medium text-gray-700">Nivel</label>
+            <input type="text" id="nivel" name="nivel" placeholder="Ingrese el nivel (TSU, Licenciatura/Ingeniería)" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div class="mb-4">
+            <label for="carrera" class="block text-sm font-medium text-gray-700">Carrera</label>
+            <input type="text" id="carrera" name="carrera" placeholder="Ingrese la carrera" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div class="mb-4">
+            <label for="cuatrimestre" class="block text-sm font-medium text-gray-700">Cuatrimestre</label>
+            <input type="text" id="cuatrimestre" name="cuatrimestre" placeholder="Ingrese el cuatrimestre" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div class="mb-4">
+            <label for="grupo" class="block text-sm font-medium text-gray-700">Grupo</label>
+            <input type="text" id="grupo" name="grupo" placeholder="Ingrese el grupo" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <!-- Otros campos similares seguirían aquí -->
 
-    <form action="/user/submit_registration_form" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 registration-form">
-        <section>
-            <h2 class="text-lg font-semibold mb-3 text-green-600">Información Personal</h2>
-            <div class="form-row">
-                <div class="form-column">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="form-column">
-                    <label for="apellido_paterno">Apellido Paterno:</label>
-                    <input type="text" id="apellido_paterno" name="apellido_paterno" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="form-column">
-                    <label for="apellido_materno">Apellido Materno:</label>
-                    <input type="text" id="apellido_materno" name="apellido_materno" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-column">
-                    <label for="curp">CURP:</label>
-                    <input type="text" id="curp" name="curp" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="form-column">
-                    <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="form-column">
-                    <label for="nacionalidad">Nacionalidad:</label>
-                    <input type="text" id="nacionalidad" name="nacionalidad" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-column">
-                    <label>Sexo:</label>
-                    <label><input type="radio" name="sexo" value="hombre" required> Hombre</label>
-                    <label><input type="radio" name="sexo" value="mujer"> Mujer</label>
-                    <label><input type="radio" name="sexo" value="otro"> Otro</label>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2 class="text-lg font-semibold mb-3 text-green-600">Contacto</h2>
-            <div class="form-row">
-                <div class="form-column">
-                    <label for="telefono_celular">Teléfono Celular:</label>
-                    <input type="tel" id="telefono_celular" name="telefono_celular" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="form-column">
-                    <label for="correo_electronico">Correo Electrónico Personal:</label>
-                    <input type="email" id="correo_electronico" name="correo_electronico" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2 class="text-lg font-semibold mb-3 text-green-600">Información Académica</h2>
-            <div class="form-row">
-                <div class="form-column">
-                    <label for="matricula">Matrícula:</label>
-                    <input type="text" id="matricula" name="matricula" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="form-column">
-                    <label for="nivel">Nivel:</label>
-                    <label><input type="radio" name="nivel" value="TSU" required> TSU</label>
-                    <label><input type="radio" name="nivel" value="Licenciatura/Ingeneria"> Licenciatura/Ingeniería</label>
-                </div>
-                <div class="form-column">
-                    <label for="carrera">Carrera:</label>
-                    <input type="text" id="carrera" name="carrera" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-column">
-                    <label for="cuatrimestre">Cuatrimestre:</label>
-                    <input type="text" id="cuatrimestre" name="cuatrimestre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="form-column">
-                    <label for="grupo">Grupo:</label>
-                    <input type="text" id="grupo" name="grupo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="form-column">
-                    <label for="nombre_tutor">Nombre del Tutor/Profesor Académico:</label>
-                    <input type="text" id="nombre_tutor" name="nombre_tutor" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-column">
-                    <label>¿Estuviste inscrito en algún taller en el anterior cuatrimestre?</label>
-                    <label><input type="radio" name="taller_anterior" value="si" required> Sí</label>
-                    <label><input type="radio" name="taller_anterior" value="no"> No</label>
-                </div>
-                <div class="form-column">
-                    <label>¿Cuentas con beca deportiva?</label>
-                    <label><input type="radio" name="beca_deportiva" value="si" required> Sí</label>
-                    <label><input type="radio" name="beca_deportiva" value="no"> No</label>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2 class="text-lg font-semibold mb-3 text-green-600">Información Adicional</h2>
-            <div class="form-row">
-                <div class="form-column">
-                    <label for="numero_seguro">N° de Seguro Social:</label>
-                    <input type="text" id="numero_seguro" name="numero_seguro" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="form-column">
-                    <label for="tipo_sangre">Tipo de Sangre:</label>
-                    <input type="text" id="tipo_sangre" name="tipo_sangre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="form-column">
-                    <label for="alergias">Alergias/Padecimientos y/o Indicaciones Médicas:</label>
-                    <input type="text" id="alergias" name="alergias" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-column">
-                    <label for="nombre_familiar">Nombre de un Familiar (en caso de emergencia):</label>
-                    <input type="text" id="nombre_familiar" name="nombre_familiar" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="form-column">
-                    <label for="parentesco_familiar">Parentesco con la Persona a Llamar:</label>
-                    <input type="text" id="parentesco_familiar" name="parentesco_familiar" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="form-column">
-                    <label for="telefono_emergencia">Teléfono Celular de la Persona a Llamar en Caso de Emergencia:</label>
-                    <input type="tel" id="telefono_emergencia" name="telefono_emergencia" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-column">
-                    <label>¿Otorgaría su permiso para usar su imagen en publicidad para la universidad?</label>
-                    <label><input type="radio" name="permiso_imagen" value="si" required> Sí</label>
-                    <label><input type="radio" name="permiso_imagen" value="no"> No</label>
-                </div>
-            </div>
-        </section>
-
-        <div class="form-row">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                Enviar
-            </button>
+        <div class="mb-4">
+            <button type="submit" class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Registrar Inscripción</button>
         </div>
     </form>
 </div>

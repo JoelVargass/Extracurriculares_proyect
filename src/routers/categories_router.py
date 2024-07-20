@@ -24,11 +24,13 @@ current_year = datetime.now().year
 async def list_categories(request: Request, db: tuple = Depends(get_db_connection)):
     connection, cursor = db
     cursor.execute("""
-        SELECT id, title, description
+        SELECT id, title, description, image_path
         FROM categories
     """)
     categories = cursor.fetchall()
+    print(categories)  # Agregar para depuración
     return templates.TemplateResponse("categories/index.html.jinja", {"request": request, "categories": categories, "current_year": current_year})
+
 
 # Crear categoría (Formulario)
 @router.get("/create", response_class=HTMLResponse)
@@ -38,7 +40,6 @@ async def create_category(request: Request):
 # Guardar categoría
 @router.post('/create', response_class=HTMLResponse)
 async def save_category(request: Request, file: UploadFile = File(...), db: tuple = Depends(get_db_connection)):
-    
     try:
         form_data = await request.form()
         form_dict = {key: value for key, value in form_data.items()}
@@ -60,6 +61,9 @@ async def save_category(request: Request, file: UploadFile = File(...), db: tupl
             # Guardar la ruta de la imagen relativa en la base de datos
             file_location = os.path.relpath(file_location, "src/data/store")
 
+            # Verificar que la imagen se guardó correctamente
+            print(f"Imagen guardada en: {file_location}")
+
         # Insertar datos de la categoría en la base de datos
         cursor.execute("""
             INSERT INTO categories (title, description, image_path)
@@ -77,6 +81,7 @@ async def save_category(request: Request, file: UploadFile = File(...), db: tupl
             "categories/create.html.jinja",
             {"request": request, "errors": error_messages, "current_year": current_year}
         )
+
 
 # Ver detalles de una categoría
 @router.get("/{category_id}", response_class=HTMLResponse)

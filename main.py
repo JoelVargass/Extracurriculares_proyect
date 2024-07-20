@@ -1,9 +1,13 @@
+import os
 from typing import Annotated
+from fastapi import Depends, FastAPI, File, Request, HTTPException, UploadFile, status
 from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi import Depends, FastAPI, Request, HTTPException, status
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.security import OAuth2PasswordBearer
+from fastapi.middleware.cors import CORSMiddleware
 from jose import jwt
+from mysql.connector import connect
 
 # ROUTERS
 from .src.routers import users_router
@@ -20,6 +24,8 @@ app.include_router(clubs_router.router)
 app.include_router(categories_router.router)
 app.include_router(views_router.router)
 app.include_router(login_router.router)
+
+app.mount("/static", StaticFiles(directory="src/data/store/static"), name="static")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/user/login")
 
@@ -70,11 +76,6 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 @app.middleware("http")
 async def create_auth_header(request: Request, call_next):
-    '''
-    Check if there are cookies set for authorization. If so, construct the
-    Authorization header and modify the request (unless the header already
-    exists!)
-    '''
     if "Authorization" not in request.headers and "access_token" in request.cookies:
         access_token = request.cookies["access_token"]
         
@@ -85,7 +86,7 @@ async def create_auth_header(request: Request, call_next):
             )
         )
         
-        request.state.user = decode_token(access_token)  # Almacena el payload del token en request.state.user
+        request.state.user = decode_token(access_token)
 
     # Verificar el rol del usuario para restringir acceso a /dashboard
     if "/dashboard" in request.url.path:
@@ -99,3 +100,33 @@ async def create_auth_header(request: Request, call_next):
     
     response = await call_next(request)
     return response
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://example.com",  # Reemplaza con tu dominio
+        "https://www.example.com"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+def get_db():
+    connection = connect(
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
+    )
+    cursor = connection.cursor(dictionary=True)
+    return connection, cursor
+
+@app.get("/api/clubs")
+def get_clubs():
+    connection, cursor = get_db()
+    cursor.execute("SELECT * FROM clubs")
+    clubs = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return clubs

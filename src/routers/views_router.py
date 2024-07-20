@@ -26,7 +26,7 @@ async def personalized_page(request: Request):
 async def support_page(request: Request):
     return templates.TemplateResponse("support.html", {"request": request})
 
-@router.get("/submit_registration_form", response_class=HTMLResponse)
+@router.get("/inscription", response_class=HTMLResponse)
 async def submit_registration_form(request: Request):
     return templates.TemplateResponse("formulario.html.jinja", {"request": request})
 

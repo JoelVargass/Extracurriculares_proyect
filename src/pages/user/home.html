@@ -25,13 +25,27 @@
 
         .slider_box ul {
             animation: slide 20s infinite alternate ease-in-out;
+            display: flex;
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+
+        .slider_box li {
+            flex: 1 0 100%;
+            max-width: 100%;
         }
 
         .image-container img {
+            width: 100%;
             height: auto;
             object-fit: cover;
-            margin: 0;
-            padding: 0;
+        }
+
+        @media (max-width: 768px) {
+            .slider_box {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -44,26 +58,26 @@
     <header class="home">
         <h1 class="text-4xl font-bold text-center py-4">¡Descubre nuestras actividades disponibles!</h1>
         <div class="slider_principal">
-            <div class="slider_box w-[700px] overflow-hidden mx-auto my-12 rounded-3xl shadow-lg">
-                <ul class="flex p-0 w-[400%]">
+            <div class="slider_box w-full md:w-[700px] overflow-hidden mx-auto my-7 md:my-12 rounded-3xl shadow-lg">
+                <ul class="flex p-0 w-full md:w-[100%]">
                     <li class="w-full relative">
                         <div class="image-container p-[5px] box-border">
-                            <img src="/static/img/Ajedrez.jpg" alt="ajedrez" class="w-full rounded-3xl">
+                            <img src="{{ url_for('static', path='img/a-ajedrez.jpg') }}" alt="ajedrez" class="rounded-3xl">
                         </div>
                     </li>
                     <li class="w-full relative">
                         <div class="image-container p-[5px] box-border">
-                            <img src="/static/img/basquetbol.jpg" alt="basquet" class="w-full rounded-3xl">
+                            <img src="{{ url_for('static', path='img/basquetbol.jpg') }}" alt="basquet" class="rounded-3xl">
                         </div>
                     </li>
                     <li class="w-full relative">
                         <div class="image-container p-[5px] box-border">
-                            <img src="/static/img/folclor.jpg" alt="folclor" class="w-full rounded-3xl">
+                            <img src="{{ url_for('static', path='img/folclor.jpg') }}" alt="folclor" class="rounded-3xl">
                         </div>
                     </li>
                     <li class="w-full relative">
                         <div class="image-container p-[5px] box-border">
-                            <img src="/static/img/futbol.jpg" alt="futbol" class="w-full rounded-3xl">
+                            <img src="{{ url_for('static', path='img/futbol.jpg') }}" alt="futbol" class="rounded-3xl">
                         </div>
                     </li>
                 </ul>
@@ -73,40 +87,41 @@
 
     <!-- CATEGORÍAS -->
     <section>
-        <h2 class="titulo_centrado text-3xl font-bold text-[#4aa282] text-center my-12">CATEGORÍAS</h2>
-        <div class="conjunto_servicios grid grid-cols-1 md:grid-cols-3 gap-8 bg-gray-100 rounded-2xl p-8 mx-auto max-w-screen-xl">
+        <h2 class="text-3xl font-bold text-[#4aa282] text-center my-12">CATEGORÍAS</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 bg-gray-100 rounded-2xl p-8 mx-auto max-w-screen-xl">
             <!-- Primer servicio -->
             <a href="/user/culturales" class="block text-[#4aa282]">
-                <div class="servicio bg-white border border-gray-300 rounded-2xl shadow-lg transition-transform transform hover:scale-105 overflow-hidden text-center">
-                    <div class="img-s relative pb-[56.25%] overflow-hidden">
-                        <img src="/static/img/s-musica.jpg" alt="culturales" class="absolute w-full h-full object-cover">
+                <div class="bg-white border border-gray-300 rounded-2xl shadow-lg transition-transform transform hover:scale-105 overflow-hidden text-center">
+                    <div class="relative pb-[56.25%] overflow-hidden">
+                        <img src="{{ url_for('static', path='img/s-musica.jpg') }}" alt="culturales" class="absolute w-full h-full object-cover">
                     </div>
                     <h3 class="text-2xl text-[#4aa282] my-2">Culturales</h3>
-                    <p class="text-gray-800 px-8">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <p class="text-gray-800 px-8 my-5">Conoce nuestras actividades culturales disponibles.</p>
                 </div>
             </a>
             <!-- Segundo servicio -->
             <a href="/user/deportivos" class="block text-[#4aa282]">
-                <div class="servicio bg-white border border-gray-300 rounded-2xl shadow-lg transition-transform transform hover:scale-105 overflow-hidden text-center">
-                    <div class="img-s relative pb-[56.25%] overflow-hidden">
-                        <img src="/static/img/s-deportivos.jpg" alt="deportivos" class="absolute w-full h-full object-cover">
+                <div class="bg-white border border-gray-300 rounded-2xl shadow-lg transition-transform transform hover:scale-105 overflow-hidden text-center">
+                    <div class="relative pb-[56.25%] overflow-hidden">
+                        <img src="{{ url_for('static', path='img/s-pingpong.jpg') }}" alt="deportivos" class="absolute w-full h-full object-cover">
                     </div>
                     <h3 class="text-2xl text-[#4aa282] my-2">Deportivos</h3>
-                    <p class="text-gray-800 px-8">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <p class="text-gray-800 px-8 my-5">Conoce nuestras actividades deportivas disponibles.</p>
                 </div>
             </a>
             <!-- Tercer servicio -->
             <a href="/user/personalizados" class="block text-[#4aa282]">
-                <div class="servicio bg-white border border-gray-300 rounded-2xl shadow-lg transition-transform transform hover:scale-105 overflow-hidden text-center">
-                    <div class="img-s relative pb-[56.25%] overflow-hidden">
-                        <img src="/static/img/s-mecanografia.jpg" alt="personalizados" class="absolute w-full h-full object-cover">
+                <div class="bg-white border border-gray-300 rounded-2xl shadow-lg transition-transform transform hover:scale-105 overflow-hidden text-center">
+                    <div class="relative pb-[56.25%] overflow-hidden">
+                        <img src="{{ url_for('static', path='img/s-lsm.jpg') }}" alt="personalizados" class="absolute w-full h-full object-cover">
                     </div>
                     <h3 class="text-2xl text-[#4aa282] my-2">Personalizados</h3>
-                    <p class="text-gray-800 px-8">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <p class="text-gray-800 px-8 my-5">Conoce nuestras actividades personalizadas disponibles.</p>
                 </div>
             </a>
         </div>
     </section>
 
 </body>
+
 </html>

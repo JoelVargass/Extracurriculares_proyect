@@ -17,6 +17,10 @@
                     <th class="py-2 px-4 text-left border-b-2 border-gray-300">Nombre</th>
                     <th class="py-2 px-4 text-left border-b-2 border-gray-300">Apellidos</th>
                     <th class="py-2 px-4 text-left border-b-2 border-gray-300">Correo</th>
+                    <th class="py-2 px-4 text-left border-b-2 border-gray-300">Correo Institucional</th>
+                    <th class="py-2 px-4 text-left border-b-2 border-gray-300">CURP</th>
+                    <th class="py-2 px-4 text-left border-b-2 border-gray-300">Fecha de Nacimiento</th>
+                    <th class="py-2 px-4 text-left border-b-2 border-gray-300">Nacionalidad</th>
                     <th class="py-2 px-4 text-left border-b-2 border-gray-300">Contacto</th>
                     <th class="py-2 px-4 text-left border-b-2 border-gray-300">Rol</th>
                     <th class="py-2 px-4 text-left border-b-2 border-gray-300">Acciones</th>
@@ -30,6 +34,10 @@
                         <td class="py-2 px-4 border-b border-gray-300">{{ user.firstname }}</td>
                         <td class="py-2 px-4 border-b border-gray-300">{{ user.lastname }}</td>
                         <td class="py-2 px-4 border-b border-gray-300">{{ user.email }}</td>
+                        <td class="py-2 px-4 border-b border-gray-300">{{ user.institutional_email }}</td>
+                        <td class="py-2 px-4 border-b border-gray-300">{{ user.curp }}</td>
+                        <td class="py-2 px-4 border-b border-gray-300">{{ user.date_of_birth }}</td>
+                        <td class="py-2 px-4 border-b border-gray-300">{{ user.nationality }}</td>
                         <td class="py-2 px-4 border-b border-gray-300">{{ user.contact }}</td>
                         <td class="py-2 px-4 border-b border-gray-300">{{ user.role }}</td>
                         <td class="py-2 px-4 border-b border-gray-300 flex gap-2">

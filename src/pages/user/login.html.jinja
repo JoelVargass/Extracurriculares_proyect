@@ -15,12 +15,12 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
+<body class="bg-gray-100 flex items-center justify-center h-screen p-4">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 class="text-3xl font-bold text-center mb-6 text-[var(--primary-color)]">Inicio de sesión</h1>
         <form id="loginForm">
             <div class="mb-4 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="40" height="40"
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24"
                     viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round"
                     stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -28,11 +28,11 @@
                     <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                 </svg>
                 <input type="text" name="username" placeholder="Matrícula" required
-                    class="ml-4 p-2 w-full border border-gray-300 rounded focus:outline-none focus:border-[var(--primary-color)]">
+                    class="ml-3 p-2 w-full border border-gray-300 rounded focus:outline-none focus:border-[var(--primary-color)] text-sm sm:text-base">
             </div>
             <div class="mb-4 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-question" width="40"
-                    height="40" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round"
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-question" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round"
                     stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
@@ -42,17 +42,17 @@
                     <path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" />
                 </svg>
                 <input type="password" name="password" placeholder="Contraseña" required
-                    class="ml-4 p-2 w-full border border-gray-300 rounded focus:outline-none focus:border-[var(--primary-color)]">
+                    class="ml-3 p-2 w-full border border-gray-300 rounded focus:outline-none focus:border-[var(--primary-color)] text-sm sm:text-base">
             </div>
             <div class="mb-4 text-right">
-                <a href="/assets/login_pass" class="text-[var(--primary-color)] hover:underline">¿Olvidaste tu contraseña?</a>
+                <a href="/assets/login_pass" class="text-[var(--primary-color)] hover:underline text-sm sm:text-base">¿Olvidaste tu contraseña?</a>
             </div>
             <div class="mb-4">
-                <button type="submit" class="w-full p-2 bg-[var(--primary-color)] text-white rounded hover:bg-opacity-90 transition duration-300">Iniciar sesión</button>
+                <button type="submit" class="w-full p-2 bg-[var(--primary-color)] text-white rounded hover:bg-opacity-90 transition duration-300 text-sm sm:text-base">Iniciar sesión</button>
             </div>
             <div class="text-center">
-                <span>¿Aun no tienes una cuenta?</span>
-                <a href="/register" class="text-[var(--primary-color)] hover:underline">Registrarse</a>
+                <span class="text-sm sm:text-base">¿Aun no tienes una cuenta?</span>
+                <a href="/register" class="text-[var(--primary-color)] hover:underline text-sm sm:text-base">Registrarse</a>
             </div>
         </form>
     </div>

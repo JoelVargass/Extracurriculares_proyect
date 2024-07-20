@@ -34,6 +34,22 @@
             <input name="email" id="email" value="{{ user.email }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" placeholder="Correo">
         </div>
         <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="institutional_email">Correo Institucional</label>
+            <input name="institutional_email" value="{{ user.institutional_email }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" placeholder="Correo Institucional">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="curp">CURP</label>
+            <input name="curp" value="{{ user.curp }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="CURP">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="date_of_birth">Fecha de Nacimiento</label>
+            <input name="date_of_birth" value="{{ user.date_of_birth }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="date">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="nationality">Nacionalidad</label>
+            <input name="nationality" value="{{ user.nationality }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Nacionalidad">
+        </div>
+        <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Contraseña</label>
             <input name="password" value="{{ user.password }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" placeholder="Contraseña">
         </div>
@@ -46,6 +62,22 @@
             <select name="role_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 {% for role in roles %}
                     <option value="{{ role.id }}" {% if user.role_id == role.id %}selected{% endif %}>{{ role.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="club_id">Club</label>
+            <select name="club_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                {% for club in clubs %}
+                    <option value="{{ club.id }}" {% if user.club_id == club.id %}selected{% endif %}>{{ club.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="degree_id">Grado Académico</label>
+            <select name="degree_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                {% for degree in degrees %}
+                    <option value="{{ degree.id }}" {% if user.degree_id == degree.id %}selected{% endif %}>{{ degree.title }}</option>
                 {% endfor %}
             </select>
         </div>
