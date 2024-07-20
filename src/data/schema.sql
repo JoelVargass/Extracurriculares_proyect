@@ -25,6 +25,7 @@ CREATE TABLE clubs (
     quota INT NOT NULL,
     teacher_name VARCHAR(255) NOT NULL,
     teacher_email VARCHAR(255) NOT NULL,
+    image_path VARCHAR(255) NOT NULL,
     category_id INT NOT NULL
 );
 

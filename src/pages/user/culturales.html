@@ -8,8 +8,7 @@
     <link rel="icon" href="/img/ut-logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         .text-white {
             color: white;
@@ -56,13 +55,10 @@
         <h2 class="relative text-[#4aa282] text-4xl font-bold sm:text-2xl z-10">ACTIVIDADES CULTURALES</h2>
     </main>
 
-    <!--SECTION-->
-    <section
-        class="section flex flex-col sm:flex-row items-start p-8 h-auto bg-white rounded-xl shadow-lg m-4 relative overflow-hidden sm:p-4">
+    <!-- SECTION -->
+    <section class="section flex flex-col sm:flex-row items-start p-8 h-auto bg-white rounded-xl shadow-lg m-4 relative overflow-hidden sm:p-4">
         <div id="root" class="activities pt-8 w-full sm:w-1/2"></div>
-        <div id="cartItem"
-            class="cart flex flex-col items-center justify-center p-8 bg-white rounded-xl shadow-lg w-full sm:w-1/2 h-auto m-2 overflow-hidden sm:p-4">
-        </div>
+        <div id="cartItem" class="cart flex flex-col items-center justify-center p-8 bg-white rounded-xl shadow-lg w-full sm:w-1/2 h-auto m-2 overflow-hidden sm:p-4"></div>
     </section>
 
     <script>
@@ -93,7 +89,7 @@
 
             document.getElementById('cartItem').innerHTML = `
                 <div class="carrito-titulo text-2xl text-center my-2">${club.club_name}</div>
-                <img src="${club.image_path}" alt="${club.club_name}" class="w-full max-w-xs h-64 object-cover rounded-2xl sm:w-[20rem] sm:h-[150px]">
+                ${club.image_path ? `<img src="${club.image_path}" alt="${club.club_name}" class="w-full max-w-xs h-64 object-cover rounded-2xl sm:w-[20rem] sm:h-[150px]">` : ''}
                 <div class="carrito-info w-full flex flex-col items-center text-center mt-4 pb-8">
                     <p class="descripcion mt-4">${club.description}</p>
                     <span class="horario mt-2">Horario: ${club.init_hour} - ${club.finish_hour}</span><br>
