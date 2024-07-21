@@ -6,29 +6,48 @@
     <form action="/user/inscription" method="post" class="max-w-md">
         <div class="mb-4">
             <label for="user_id" class="block text-sm font-medium text-gray-700">ID de Usuario</label>
-            <input type="text" id="user_id" name="user_id" placeholder="Ingrese el ID de usuario" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <input type="text" id="user_id" name="user_id" placeholder="Ingrese el ID de usuario" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
         </div>
         <div class="mb-4">
             <label for="club_id" class="block text-sm font-medium text-gray-700">ID de Club</label>
-            <input type="text" id="club_id" name="club_id" placeholder="Ingrese el ID de club" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <input type="text" id="club_id" name="club_id" placeholder="Ingrese el ID de club" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
         </div>
         <div class="mb-4">
-            <label for="nivel" class="block text-sm font-medium text-gray-700">Nivel</label>
-            <input type="text" id="nivel" name="nivel" placeholder="Ingrese el nivel (TSU, Licenciatura/Ingeniería)" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <label for="cuatri" class="block text-sm font-medium text-gray-700">Cuatrimestre</label>
+            <input type="text" id="cuatri" name="cuatri" placeholder="Ingrese el cuatrimestre" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
         </div>
         <div class="mb-4">
-            <label for="carrera" class="block text-sm font-medium text-gray-700">Carrera</label>
-            <input type="text" id="carrera" name="carrera" placeholder="Ingrese la carrera" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <label for="group_number" class="block text-sm font-medium text-gray-700">Número de Grupo</label>
+            <input type="text" id="group_number" name="group_number" placeholder="Ingrese el número de grupo" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
         </div>
         <div class="mb-4">
-            <label for="cuatrimestre" class="block text-sm font-medium text-gray-700">Cuatrimestre</label>
-            <input type="text" id="cuatrimestre" name="cuatrimestre" placeholder="Ingrese el cuatrimestre" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <label for="tutor_name" class="block text-sm font-medium text-gray-700">Nombre del Tutor</label>
+            <input type="text" id="tutor_name" name="tutor_name" placeholder="Ingrese el nombre del tutor" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
         </div>
         <div class="mb-4">
-            <label for="grupo" class="block text-sm font-medium text-gray-700">Grupo</label>
-            <input type="text" id="grupo" name="grupo" placeholder="Ingrese el grupo" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <label for="seguro_social" class="block text-sm font-medium text-gray-700">Número de Seguro Social</label>
+            <input type="text" id="seguro_social" name="seguro_social" placeholder="Ingrese el número de seguro social" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
         </div>
-        <!-- Otros campos similares seguirían aquí -->
+        <div class="mb-4">
+            <label for="blood_type" class="block text-sm font-medium text-gray-700">Tipo de Sangre</label>
+            <input type="text" id="blood_type" name="blood_type" placeholder="Ingrese el tipo de sangre" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div class="mb-4">
+            <label for="medical_conditions" class="block text-sm font-medium text-gray-700">Condiciones Médicas</label>
+            <input type="text" id="medical_conditions" name="medical_conditions" placeholder="Ingrese las condiciones médicas" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+        <div class="mb-4">
+            <label for="emergency_contact_name" class="block text-sm font-medium text-gray-700">Nombre del Contacto de Emergencia</label>
+            <input type="text" id="emergency_contact_name" name="emergency_contact_name" placeholder="Ingrese el nombre del contacto de emergencia" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+        </div>
+        <div class="mb-4">
+            <label for="emergency_contact_phone" class="block text-sm font-medium text-gray-700">Teléfono del Contacto de Emergencia</label>
+            <input type="text" id="emergency_contact_phone" name="emergency_contact_phone" placeholder="Ingrese el teléfono del contacto de emergencia" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+        </div>
+        <div class="mb-4">
+            <label for="contact_relationship" class="block text-sm font-medium text-gray-700">Relación con el Contacto de Emergencia</label>
+            <input type="text" id="contact_relationship" name="contact_relationship" placeholder="Ingrese la relación con el contacto de emergencia" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+        </div>
 
         <div class="mb-4">
             <button type="submit" class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Registrar Inscripción</button>

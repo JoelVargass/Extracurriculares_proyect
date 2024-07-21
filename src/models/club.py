@@ -1,4 +1,5 @@
 from typing import Optional
+from fastapi import UploadFile
 from pydantic import BaseModel, Field, ConfigDict
 from pydantic import EmailStr
 from datetime import time
@@ -18,7 +19,7 @@ class ClubRequest(Model):
     quota: int = Field(..., title="Cupo", description="El número máximo de participantes")
     teacher_name: str = Field(..., title="Nombre del Maestro", description="El nombre del maestro encargado del club", min_length=5, max_length=100)
     teacher_email: EmailStr = Field(..., title="Correo Electrónico del Maestro", description="El correo electrónico del maestro encargado del club")
-    image_path: Optional[str] = Field(None, title="Imagen", description="Ruta de la imagen")
+    image_path: UploadFile = Field(None, title="Imagen", description="Ruta de la imagen")
     category_id: int = Field(..., title="ID de la Categoría", description="El ID de la categoría a la que pertenece el club")
 
 class ClubResponse(Model):
@@ -31,7 +32,7 @@ class ClubResponse(Model):
     quota: int
     teacher_name: str
     teacher_email: EmailStr
-    image_path: str
+    image_path: UploadFile
     category: str
 
 class ClubListResponse(Model):

@@ -1,7 +1,7 @@
 import os
 from typing import Annotated
 from fastapi import Depends, FastAPI, File, Request, HTTPException, UploadFile, status
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.security import OAuth2PasswordBearer
@@ -32,6 +32,22 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/user/login")
 SECRET_KEY = "clave"
 ALGORITHM = "HS256"
 
+
+def save_image(file: UploadFile, category_id: int):
+    # Directorio donde se guardarán las imágenes
+    upload_dir = f"src/data/store/static/img/category_{category_id}"
+    os.makedirs(upload_dir, exist_ok=True)
+    
+    # Nombre del archivo
+    file_path = os.path.join(upload_dir, file.filename)
+    
+    # Guarda el archivo
+    with open(file_path, "wb") as buffer:
+        buffer.write(file.file.read())
+
+    # Devuelve solo el nombre del archivo
+    return file.filename
+
 def decode_token(token: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -56,7 +72,7 @@ async def read_root(request: Request):
     user = request.state.user if hasattr(request.state, "user") else None
     return templates.TemplateResponse("home.html", {"request": request, "user": user})
 
-@app.get("/dashboard/users", response_class=HTMLResponse)
+@app.get("/dashboard", response_class=HTMLResponse)
 async def dashboard_users(request: Request, user: Annotated[dict, Depends(admin_required)]):
     return templates.TemplateResponse("dashboard.html", {"request": request, "user": user})
 
@@ -101,6 +117,15 @@ async def create_auth_header(request: Request, call_next):
     response = await call_next(request)
     return response
 
+@app.middleware("http")
+async def image_middleware(request: Request, call_next):
+    if request.url.path.startswith("/static/"):
+        image_path = request.url.path.lstrip("/")
+        if not os.path.isfile(image_path):
+            return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={"detail": "Image not found"})
+    response = await call_next(request)
+    return response
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -130,3 +155,4 @@ def get_clubs():
     cursor.close()
     connection.close()
     return clubs
+

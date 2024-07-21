@@ -26,7 +26,8 @@ CREATE TABLE clubs (
     teacher_name VARCHAR(255) NOT NULL,
     teacher_email VARCHAR(255) NOT NULL,
     image_path VARCHAR(255) NOT NULL,
-    category_id INT NOT NULL
+    category_id INT NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
 CREATE TABLE users (
@@ -35,9 +36,9 @@ CREATE TABLE users (
     firstname VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    institutional_email VARCHAR(100) NOT NULL,
-    curp VARCHAR(18) NOT NULL,
-    date_of_birth DATE NOT NULL,
+    institutional_email VARCHAR(255) NOT NULL,
+    curp VARCHAR(255) NOT NULL,
+    date_of_birth DATE,
     nationality VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL,
     contact VARCHAR(255) NOT NULL,
@@ -51,7 +52,7 @@ CREATE TABLE users (
 
 CREATE TABLE enrollments (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL UNIQUE,
+    user_id INT NOT NULL,
     club_id INT,
     cuatri VARCHAR(10) NOT NULL,
     group_number VARCHAR(10) NOT NULL,
@@ -67,4 +68,3 @@ CREATE TABLE enrollments (
 );
 
 INSERT INTO roles (title) VALUES ('admin'), ('student');
-

@@ -16,12 +16,46 @@
         </div>
     {% endif %}
     <form method="post" action="/dashboard/clubs/{{ club.id }}/edit" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <!-- Aquí se muestran los datos actuales del club -->
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="club_name">Nombre del club</label>
             <input name="club_name" id="club_name" value="{{ club.club_name }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Nombre del club">
         </div>
-        <!-- Más campos aquí -->
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Descripción</label>
+            <textarea name="description" id="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Descripción del club">{{ club.description }}</textarea>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="location">Ubicación</label>
+            <input name="location" id="location" value="{{ club.location }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Ubicación del club">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="init_hour">Hora de inicio</label>
+            <input name="init_hour" id="init_hour" value="{{ club.init_hour }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="time" placeholder="Hora de inicio">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="finish_hour">Hora de finalización</label>
+            <input name="finish_hour" id="finish_hour" value="{{ club.finish_hour }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="time" placeholder="Hora de finalización">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="quota">Cuota</label>
+            <input name="quota" id="quota" value="{{ club.quota }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" placeholder="Cuota del club">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="teacher_name">Nombre del profesor</label>
+            <input name="teacher_name" id="teacher_name" value="{{ club.teacher_name }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Nombre del profesor">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="teacher_email">Correo electrónico del profesor</label>
+            <input name="teacher_email" id="teacher_email" value="{{ club.teacher_email }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" placeholder="Correo electrónico del profesor">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="category_id">Categoría</label>
+            <select name="category_id" id="category_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == club.category_id %}selected{% endif %}>{{ category.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="image">Imagen</label>
             {% if club.image_path %}

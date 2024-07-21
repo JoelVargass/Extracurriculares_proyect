@@ -73,3 +73,29 @@ def close_db(connection):
     connection.close()
     
 initialize_database()
+
+def store_image_file_path(file_path: str):
+    # Extraer solo el nombre del archivo de la ruta completa
+    file_name = os.path.basename(file_path)
+    
+    connection, cursor = get_db()
+    
+    try:
+        # Aquí deberías ajustar la consulta SQL según la tabla y columna que utilices
+        insert_query = "INSERT INTO images (file_name) VALUES (%s)"
+        cursor.execute(insert_query, (file_name,))
+        connection.commit()
+        print("Nombre del archivo almacenado correctamente.")
+    
+    except Error as e:
+        print(f"Error al insertar el nombre del archivo en la base de datos: {e}")
+    
+    finally:
+        close_db(connection)
+
+# Inicializa la base de datos
+initialize_database()
+
+# Ejemplo de cómo almacenar el nombre del archivo
+file_path = "C:/Users/varga/Documents/tilin-crud/src/data/store/static/img/Flores.jpg"
+store_image_file_path(file_path)
