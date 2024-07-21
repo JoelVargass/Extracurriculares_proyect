@@ -1,68 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extracurriculares UT</title>
-    <link rel="icon" href="/img/ut-logo.png">
+    <title>Actividades Culturales</title>
+    <link rel="icon" href="/static/img/ut-logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Mantenemos las queries de medios y estilos personalizados */
+        .text-white {
+            color: white;
+        }
         @media screen and (max-width: 375px) {
             .section {
                 flex-direction: column;
             }
-
             .cart {
                 position: static;
                 order: -1;
                 margin-bottom: 1rem;
                 width: 100%;
             }
-
             .activities {
                 width: 100%;
             }
         }
-
         @media screen and (min-width: 376px) {
             .cart {
                 position: relative;
                 order: 0;
                 width: 50%;
             }
-
             .activities {
                 width: 50%;
             }
         }
     </style>
 </head>
-
 <body class="bg-gray-100">
-
     {% include 'components/navbar.html' %}
-
     <!-- HEADER-->
-    <main class="relative flex items-center justify-center bg-cover bg-center bg-no-repeat rounded-xl h-80 my-14 mx-6 sm:mx-4" style="background-image: url('/img/pintura_cultural-s.jpg');">
-        <div class="absolute inset-0 bg-black opacity-50 rounded-xl"></div>
-        <h2 class="relative text-white text-4xl sm:text-2xl">ACTIVIDADES PERSONALIZADAS</h2>
+    <main class="relative flex items-center justify-center rounded-xl h-20 my-14 mx-6 sm:mx-4 bg-cover bg-center text-white">
+        <div class="absolute inset-0 bg-white rounded-xl"></div>
+        <h2 class="relative text-[#4aa282] text-4xl font-bold sm:text-2xl z-10">ACTIVIDADES PERSONALIZADAS</h2>
     </main>
-
-    <!--SECTION-->
+    <!-- SECTION -->
     <section class="section flex flex-col sm:flex-row items-start p-8 h-auto bg-white rounded-xl shadow-lg m-4 relative overflow-hidden sm:p-4">
         <div id="root" class="activities pt-8 w-full sm:w-1/2"></div>
         <div id="cartItem" class="cart flex flex-col items-center justify-center p-8 bg-white rounded-xl shadow-lg w-full sm:w-1/2 h-auto m-2 overflow-hidden sm:p-4"></div>
     </section>
-
     <script>
         async function fetchClubs() {
             const response = await fetch('/api/clubs');
             const clubs = await response.json();
-            return clubs.filter(club => club.category_id === 3);
+            return clubs.filter(club => club.category_id === 3); 
+        }
+
+        function normalizeImagePath(path) {
+            return path.replace(/\\/g, '/');
         }
 
         async function renderClubs() {
@@ -85,8 +81,8 @@
             const club = clubs.find(club => club.id === id);
 
             document.getElementById('cartItem').innerHTML = `
-                <div class="carrito-titulo text-2xl text-center my-2">${club.club_name}</div>
-                <img src="${club.image_path}" alt="${club.club_name}" class="w-full max-w-xs h-64 object-cover rounded-2xl sm:w-[20rem] sm:h-[150px]">
+                <div class="carrito-titulo text-2xl text-center my-2 text-[#4aa282] uppercase">${club.club_name}</div>
+                ${club.image_path ? `<img src="/static/${normalizeImagePath(club.image_path)}" alt="${club.club_name}" class="w-full max-w-xs h-64 object-cover rounded-2xl sm:w-[20rem] sm:h-[150px]">` : ''}
                 <div class="carrito-info w-full flex flex-col items-center text-center mt-4 pb-8">
                     <p class="descripcion mt-4">${club.description}</p>
                     <span class="horario mt-2">Horario: ${club.init_hour} - ${club.finish_hour}</span><br>
@@ -106,5 +102,4 @@
         document.addEventListener('DOMContentLoaded', renderClubs);
     </script>
 </body>
-
 </html>

@@ -1,7 +1,7 @@
 import os
 from typing import Annotated
-from fastapi import Depends, FastAPI, File, Request, HTTPException, UploadFile, status
-from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
+from fastapi import Depends, FastAPI, HTTPException, Request, UploadFile, status
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.security import OAuth2PasswordBearer
@@ -10,11 +10,7 @@ from jose import jwt
 from mysql.connector import connect
 
 # ROUTERS
-from .src.routers import users_router
-from .src.routers import clubs_router
-from .src.routers import categories_router
-from .src.routers import views_router
-from .src.routers import login_router
+from .src.routers import users_router, clubs_router, categories_router, views_router, login_router, register_router, form_router
 
 templates = Jinja2Templates(directory="src/pages/user")
 
@@ -24,6 +20,8 @@ app.include_router(clubs_router.router)
 app.include_router(categories_router.router)
 app.include_router(views_router.router)
 app.include_router(login_router.router)
+app.include_router(register_router.router)
+app.include_router(form_router.router)
 
 app.mount("/static", StaticFiles(directory="src/data/store/static"), name="static")
 
@@ -32,20 +30,12 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/user/login")
 SECRET_KEY = "clave"
 ALGORITHM = "HS256"
 
-
 def save_image(file: UploadFile, category_id: int):
-    # Directorio donde se guardarán las imágenes
     upload_dir = f"src/data/store/static/img/category_{category_id}"
     os.makedirs(upload_dir, exist_ok=True)
-    
-    # Nombre del archivo
     file_path = os.path.join(upload_dir, file.filename)
-    
-    # Guarda el archivo
     with open(file_path, "wb") as buffer:
         buffer.write(file.file.read())
-
-    # Devuelve solo el nombre del archivo
     return file.filename
 
 def decode_token(token: str):
@@ -94,17 +84,14 @@ async def global_exception_handler(request: Request, exc: Exception):
 async def create_auth_header(request: Request, call_next):
     if "Authorization" not in request.headers and "access_token" in request.cookies:
         access_token = request.cookies["access_token"]
-        
         request.headers.__dict__["_list"].append(
             (
                 "authorization".encode(),
                 f"Bearer {access_token}".encode(),
             )
         )
-        
         request.state.user = decode_token(access_token)
-
-    # Verificar el rol del usuario para restringir acceso a /dashboard
+    
     if "/dashboard" in request.url.path:
         if "access_token" in request.cookies:
             access_token = request.cookies["access_token"]
@@ -120,7 +107,7 @@ async def create_auth_header(request: Request, call_next):
 @app.middleware("http")
 async def image_middleware(request: Request, call_next):
     if request.url.path.startswith("/static/"):
-        image_path = request.url.path.lstrip("/")
+        image_path = os.path.join(os.getcwd(), request.url.path.lstrip("/"))
         if not os.path.isfile(image_path):
             return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={"detail": "Image not found"})
     response = await call_next(request)
@@ -155,4 +142,3 @@ def get_clubs():
     cursor.close()
     connection.close()
     return clubs
-

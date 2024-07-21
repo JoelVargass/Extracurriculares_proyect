@@ -81,7 +81,7 @@
             const club = clubs.find(club => club.id === id);
 
             document.getElementById('cartItem').innerHTML = `
-                <div class="carrito-titulo text-2xl text-center my-2">${club.club_name}</div>
+                <div class="carrito-titulo text-2xl text-center my-2 text-[#4aa282] uppercase">${club.club_name}</div>
                 ${club.image_path ? `<img src="/static/${normalizeImagePath(club.image_path)}" alt="${club.club_name}" class="w-full max-w-xs h-64 object-cover rounded-2xl sm:w-[20rem] sm:h-[150px]">` : ''}
                 <div class="carrito-info w-full flex flex-col items-center text-center mt-4 pb-8">
                     <p class="descripcion mt-4">${club.description}</p>

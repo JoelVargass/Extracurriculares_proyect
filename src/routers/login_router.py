@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Request, Response
-from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
 from jose import jwt, JWTError
