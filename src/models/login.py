@@ -40,3 +40,7 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     enrollment_number: str = None
     role_id: int = None
+    
+class UserInDB(User):
+    hashed_password: str
+    

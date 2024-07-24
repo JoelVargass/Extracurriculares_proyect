@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Recuperar Contraseña</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .formulario {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .botones {
+            background-color: #4aa282;
+            color: #ffffff;
+        }
+
+        .botones:hover {
+            background-color: #3e866b;
+        }
+
+        .imagen_input svg {
+            margin-right: 10px;
+        }
+
+        .nombre_usuario label {
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="formulario bg-white p-8 rounded-lg shadow-md">
+        <h1 class="text-2xl font-semibold text-center mb-6">Recuperar Contraseña</h1>
+        <form>
+            <div class="imagen_input flex items-center border-b border-gray-300 py-2 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-at" width="32" height="32"
+                    viewBox="0 0 24 24" stroke-width="2.5" stroke="#4aa282" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                    <path d="M16 12v1.5a2.5 2.5 0 0 0 5 0v-1.5a9 9 0 1 0 -5.5 8.28" />
+                </svg>
+                <div class="nombre_usuario w-full">
+                    <label class="block uppercase tracking-wide text-xs font-bold">Correo institucional</label>
+                    <input type="email" class="appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none" required>
+                </div>
+            </div>
+
+            <button class="botones w-full py-2 px-4 rounded-lg mb-4">Enviar código</button>
+
+            <div class="imagen_input flex items-center border-b border-gray-300 py-2 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-123" width="32" height="32"
+                    viewBox="0 0 24 24" stroke-width="2.5" stroke="#4aa282" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M3 10l2 -2v8" />
+                    <path d="M9 8h3a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 0 -1 1v2a1 1 0 0 0 1 1h3" />
+                    <path
+                        d="M17 8h2.5a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1 -1.5 1.5h-1.5h1.5a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1 -1.5 1.5h-2.5" />
+                </svg>
+                <div class="nombre_usuario w-full">
+                    <label class="block uppercase tracking-wide text-xs font-bold">Ingresar código</label>
+                    <input type="text" class="appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none" required>
+                </div>
+            </div>
+
+            <button type="submit" class="botones w-full py-2 px-4 rounded-lg">Recuperar Contraseña</button>
+        </form>
+    </div>
+</body>
+
+</html>

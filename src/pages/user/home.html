@@ -62,7 +62,7 @@
                 <ul class="flex p-0 w-full md:w-[100%]">
                     <li class="w-full relative">
                         <div class="image-container p-[5px] box-border">
-                            <img src="{{ url_for('static', path='img/a-ajedrez.jpg') }}" alt="ajedrez" class="rounded-3xl">
+                            <img src="{{ url_for('static', path='img/Ajedrez.jpg') }}" alt="ajedrez" class="rounded-3xl">
                         </div>
                     </li>
                     <li class="w-full relative">
@@ -93,7 +93,7 @@
             <a href="/user/culturales" class="block text-[#4aa282]">
                 <div class="bg-white border border-gray-300 rounded-2xl shadow-lg transition-transform transform hover:scale-105 overflow-hidden text-center">
                     <div class="relative pb-[56.25%] overflow-hidden">
-                        <img src="{{ url_for('static', path='img/s-musica.jpg') }}" alt="culturales" class="absolute w-full h-full object-cover">
+                        <img src="{{ url_for('static', path='img/a-foto.jpg') }}" alt="culturales" class="absolute w-full h-full object-cover">
                     </div>
                     <h3 class="text-2xl text-[#4aa282] my-2">Culturales</h3>
                     <p class="text-gray-800 px-8 my-5">Conoce nuestras actividades culturales disponibles.</p>
@@ -121,7 +121,7 @@
             </a>
         </div>
     </section>
-
+    {% include 'components/footer.html' %}
 </body>
 
 </html>

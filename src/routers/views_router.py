@@ -33,3 +33,7 @@ async def submit_registration_form(request: Request):
 @router.get("/register", response_class=HTMLResponse)
 async def register_page(request: Request):
     return templates.TemplateResponse("register.html.jinja", {"request": request})
+
+@router.get("/login_pass", response_class=HTMLResponse)
+async def recover_pass_page(request: Request):
+    return templates.TemplateResponse("login_pass.html.jinja", {"request": request})

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicio Técnico</title>
+    <link rel="stylesheet" href="estilos/normalize.css">
+    <link rel="stylesheet" href="estilos.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .btn {
+            background-color: white;
+            border: 1px solid #d1d5db;
+            color: #374151;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+
+        .btn-secondary {
+            background-color: #f3f4f6;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5e7eb;
+        }
+
+        .content-section {
+            background-color: white;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+
+            .header-buttons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-900 p-3">
+    {% include 'components/navbar.html' %}
+
+    <div class="bg-white shadow-md p-4 flex flex-wrap justify-center space-x-4 border-t border-gray-200 header-buttons">
+        <button class="btn btn-secondary">
+            Preguntas frecuentes
+        </button>
+        <button class="btn btn-primary">
+            Dudas del sistema
+        </button>
+    </div>
+
+    <section class="container mx-auto p-4 flex flex-col md:flex-row gap-6">
+        <div class="flex-1 content-section">
+            <h2 class="text-xl font-bold mb-4">Preguntas frecuentes</h2>
+            <button onclick="mostrarRespuesta('respuesta1')" class="block w-full text-left py-2 px-4 mb-2 border border-gray-300 rounded hover:bg-gray-100 transition duration-300">Cuánto tiempo tengo para hacer las preguntas</button>
+            <button onclick="mostrarRespuesta('respuesta2')" class="block w-full text-left py-2 px-4 mb-2 border border-gray-300 rounded hover:bg-gray-100 transition duration-300">Aún no me llega el correo</button>
+            <button onclick="mostrarRespuesta('respuesta3')" class="block w-full text-left py-2 px-4 mb-2 border border-gray-300 rounded hover:bg-gray-100 transition duration-300">En cuántos extracurriculares puedo participar</button>
+            <button onclick="mostrarRespuesta('respuesta4')" class="block w-full text-left py-2 px-4 mb-2 border border-gray-300 rounded hover:bg-gray-100 transition duration-300">¿Tengo la opción de no participar en actividades extracurriculares si tengo un trabajo?</button>
+            <button onclick="mostrarRespuesta('respuesta5')" class="block w-full text-left py-2 px-4 mb-2 border border-gray-300 rounded hover:bg-gray-100 transition duration-300">Se me cerró el cuestionario</button>
+            <button onclick="mostrarRespuesta('respuesta6')" class="block w-full text-left py-2 px-4 mb-2 border border-gray-300 rounded hover:bg-gray-100 transition duration-300">Qué pasa si me salgo a medio curso de extracurricular</button>
+            <button onclick="mostrarRespuesta('respuesta7')" class="block w-full text-left py-2 px-4 mb-2 border border-gray-300 rounded hover:bg-gray-100 transition duration-300">Cada cuánto tengo son las inscripciones</button>
+            <button onclick="mostrarFormulario()" class="block w-full text-left py-2 px-4 border border-gray-300 rounded hover:bg-gray-100 transition duration-300">Formulario de Contacto</button>
+        </div>
+
+        <div class="flex-2 content-section">
+            <h2 class="text-xl font-bold mb-4">Pregunta seleccionada</h2>
+            <div id="respuesta-seleccionada"></div>
+        </div>
+    </section>
+
+    <script>
+        function mostrarRespuesta(id) {
+            const respuestas = {
+                respuesta1: {
+                    pregunta: "¿Cuánto tiempo tengo para hacer las preguntas?",
+                    respuesta: `Recuerda que solo tienes media hora para completar el proceso de inscripción a las actividades extracurriculares. Es fundamental que no olvides cerrar tu sesión después de inscribirte, ya que si tu sesión caduca, corres el riesgo de no quedar registrado en ninguna actividad.
+
+                    Tiempo Limitado: Asegúrate de gestionar bien tu tiempo. Solo dispones de 30 minutos para inscribirte en las actividades de tu interés.
+                    Cierre de Sesión: No olvides cerrar tu sesión una vez hayas terminado. Esto es crucial para evitar cualquier inconveniente con tu inscripción.
+                    Riesgo de No Inscripción: Si tu sesión caduca y no cierras correctamente, podrías no quedar inscrito en ninguna actividad extracurricular, lo cual podría afectar tu participación en el programa.`
+                },
+                respuesta2: {
+                    pregunta: "¿Aún no me llega el correo?",
+                    respuesta: `Por favor, espera al menos una semana hasta que recibas la confirmación en tu correo electrónico. Te recomendamos revisar regularmente tu bandeja de entrada. En caso de que haya pasado el plazo solicitado sin recibir la confirmación, por favor dirígete a la sala de la coordinadora de extracurriculares o envía un mensaje a este correo electrónico para obtener asistencia adicional.`
+                },
+                respuesta3: {
+                    pregunta: "¿En cuántos extracurriculares puedo participar?",
+                    respuesta: "Puedes participar solo en uno, cuando termines tu cuatrimestre puedes seguir en el que estás o cambiar en caso de que te guste otro."
+                },
+                respuesta4: {
+                    pregunta: "¿Tengo la opción de no participar en actividades extracurriculares si tengo un trabajo?",
+                    respuesta: `Una vez que te inscribas en una actividad extracurricular, debes permanecer en ella hasta que termine. Puedes salirte si no te gusta, pero las asistencias acumuladas no se reflejarán en tu registro si lo haces. Después de finalizar una actividad, podrás inscribirte en otra en el siguiente periodo de inscripción.
+                    Completar una actividad hasta el final ofrece beneficios como el desarrollo de habilidades, certificados y una mejor proyección académica. La participación continua demuestra compromiso y dedicación. Para asesoramiento sobre qué actividad elegir, consulta con tus profesores o coordinadores.`
+                },
+                respuesta5: {
+                    pregunta: "Se me cerró el cuestionario",
+                    respuesta: `En caso de que se cierre el período de inscripción, es necesario enviar un correo electrónico a correoprueba@utcancun.edu.mx solicitando asistencia a la mayor brevedad posible. Es importante destacar que, si se espera más de una semana, existe la posibilidad de no poder inscribirse en una actividad extracurricular hasta el siguiente cuatrimestre.`
+                },
+                respuesta6: {
+                    pregunta: "¿Qué pasa si me salgo a medio curso de extracurricular?",
+                    respuesta: `Para cumplir con los requisitos de graduación, es imprescindible participar en el extracurricular durante los 4 cuatrimestres establecidos. Estos períodos no solo proporcionan una experiencia enriquecedora fuera del aula, sino que también pueden contribuir al desarrollo personal y académico del estudiante. Después de completar los 4 cuatrimestres obligatorios, muchos estudiantes optan por continuar en el extracurricular para profundizar en sus intereses, ampliar sus habilidades y contribuir aún más a la comunidad escolar.`
+                },
+                respuesta7: {
+                    pregunta: "¿Cada cuánto tengo son las inscripciones?",
+                    respuesta: `Para aquellos estudiantes que demuestran que están trabajando mediante un justificante válido, existe la opción de ser eximidos de la obligación de participar en actividades extracurriculares. Esta medida reconoce y respeta las responsabilidades laborales de los estudiantes, permitiéndoles equilibrar sus compromisos académicos con sus empleos. Es importante destacar que esta excepción puede variar según las políticas específicas de cada institución educativa.`
+                }
+            };
+
+            const respuesta = respuestas[id];
+            if (respuesta) {
+                document.getElementById('respuesta-seleccionada').innerHTML = `
+                    <h3 class="text-lg font-semibold mb-2">${respuesta.pregunta}</h3>
+                    <p>${respuesta.respuesta}</p>
+                `;
+            }
+        }
+    </script>
+    {% include 'components/footer.html' %}
+</body>
+
+</html>

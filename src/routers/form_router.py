@@ -1,4 +1,3 @@
-# src/routers/inscription.py
 
 from fastapi import APIRouter, Depends, Request, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -25,20 +24,28 @@ async def save_inscription(request: Request, db: tuple = Depends(get_db_connecti
         form_data = await request.form()
         form_dict = {key: value for key, value in form_data.items()}
         connection, cursor = db
-        
+
         # Validar y guardar datos del formulario
         inscription_data = InscriptionRequest(**form_dict)
 
         cursor.execute("""
-            INSERT INTO enrollments (cuatri, group_number, tutor_name, seguro_social, blood_type, medical_conditions, emergency_contact_name, emergency_contact_phone, contact_relationship)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO enrollments (user_id, club_id, cuatri, group_number, tutor_name, seguro_social, blood_type, medical_conditions, emergency_contact_name, emergency_contact_phone, contact_relationship)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """, (
-            inscription_data.cuatri, inscription_data.group_number, inscription_data.tutor_name, 
-            inscription_data.seguro_social, inscription_data.blood_type, inscription_data.medical_conditions, 
-            inscription_data.emergency_contact_name, inscription_data.emergency_contact_phone, inscription_data.contact_relationship
+            request.state.user_id,  # Asumiendo que el user_id está almacenado en request.state
+            inscription_data.club_id, 
+            inscription_data.cuatri, 
+            inscription_data.group_number, 
+            inscription_data.tutor_name, 
+            inscription_data.seguro_social, 
+            inscription_data.blood_type, 
+            inscription_data.medical_conditions, 
+            inscription_data.emergency_contact_name, 
+            inscription_data.emergency_contact_phone, 
+            inscription_data.contact_relationship
         ))
         connection.commit()
-        return RedirectResponse(url="/inscriptions", status_code=303)
+        return RedirectResponse(url="/", status_code=303)
     
     except ValidationError as e:
         cursor.execute("SELECT * FROM clubs")

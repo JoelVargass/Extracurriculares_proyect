@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer con Información de Desarrollo y Mapa del Sitio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-[#fdf8f8] text-[#fbfafa] font-sans">
+
+    <footer class="bg-[#fffcfc] text-[#0a0a0a] py-10 text-center">
+        <div class="w-full mx-auto mb-5 shadow-lg p-5">
+            <div class="flex flex-col md:flex-row justify-around mb-8">
+                <div class="flex flex-col items-center md:items-start">
+                    <h3 class="text-[#4aa282] text-xl mb-4">Mapa del Sitio</h3>
+                    <div class="flex flex-wrap justify-center md:justify-start">
+                        <ul class="list-none p-0 mx-4">
+                            <li class="mb-2 font-bold text-center underline">Pagina principal</li>
+                            <li><a href="/" class="text-[#151414] hover:text-[#4aa282] transition-colors">Inicio</a></li>
+                            <li><a href="/user/support" class="text-[#151414] hover:text-[#4aa282] transition-colors">Soporte</a></li>
+                        </ul>
+                        <ul class="list-none p-0 mx-4">
+                            <li class="mb-2 font-bold text-center underline">Sesión</li>
+                            <li><a href="/user/login" class="text-[#151414] hover:text-[#4aa282] transition-colors">Ingresar</a></li>
+                            <li><a href="/user/register" class="text-[#151414] hover:text-[#4aa282] transition-colors">Registrarse</a></li>
+                            <li><a href="/user/login_pass" class="text-[#151414] hover:text-[#4aa282] transition-colors">Recuperar contraseña</a></li>
+                        </ul>
+                        <ul class="list-none p-0 mx-4">
+                            <li class="mb-2 font-bold text-center underline">Extracurriculares</li>
+                            <li><a href="/user/culturales" class="text-[#151414] hover:text-[#4aa282] transition-colors">Categorías Culturales</a></li>
+                            <li><a href="/user/deportivos" class="text-[#151414] hover:text-[#4aa282] transition-colors">Categorías Deportivas</a></li>
+                            <li><a href="/user/personalizados" class="text-[#151414] hover:text-[#4aa282] transition-colors">Categorías Personalizadas</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-8 md:mt-0">
+                    <h3 class="text-[#4aa282] text-xl mb-4">Desarrolladores</h3>
+                    <div class="flex justify-center gap-20">
+                        <p>Joel Vargas Perez</p>
+                        <p>Efrain Salinas Flores</p>
+                        <p>Juan De La Cruz Pat</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-[#f6f5f5] py-3 mt-5">
+                <p class="text-[#151414] mb-1">&copy; 2024 UT-Devs. Todos los derechos reservados.</p>
+                <div>
+                    <h3 class="text-[#4aa282] mb-2">Enlaces</h3>
+                    <a href="/terminos.html" class="text-[#151414] hover:text-[#4aa282] transition-colors">Términos y Condiciones</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

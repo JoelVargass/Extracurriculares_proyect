@@ -1,47 +1,67 @@
-from fastapi import APIRouter, Depends, Request, HTTPException
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
-from pydantic import ValidationError
-from ..dependencies.database import get_db_connection
-from ..models.register import UserCreateRequest
-from ..utility.functions import format_errors
+from fastapi import APIRouter, Depends, HTTPException, status, Request, Response
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jose import jwt, JWTError
+from pydantic import BaseModel
+from typing import Optional
+from ..data.database import get_db, close_db
 
-router = APIRouter(
-    prefix="/register",
-    tags=["register"]
-)
+router = APIRouter()
 
-templates = Jinja2Templates(directory="src/pages/user")
+SECRET_KEY = "clave"
+ALGORITHM = "HS256"
 
-@router.get("", response_class=HTMLResponse)
-async def register_form(request: Request, db: tuple = Depends(get_db_connection)):
-    connection, cursor = db
-    cursor.execute("SELECT * FROM university_degrees")
-    degrees = cursor.fetchall()
+class UserRegisterRequest(BaseModel):
+    enrollment_number: str
+    firstname: str
+    lastname: str
+    email: str
+    institutional_email: Optional[str]
+    password: str
+    contact: str
+    curp: Optional[str]
+    date_of_birth: Optional[str]
+    nationality: Optional[str]
+    degree_id: int  # Agregamos degree_id aquí
 
-    return templates.TemplateResponse("formulario.html.jinja", {"request": request, "degrees": degrees})
+def encode_token(payload: dict) -> str:
+    token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+    return token
 
-@router.post("", response_class=HTMLResponse)
-async def register_user(request: Request, db: tuple = Depends(get_db_connection)):
-    try:
-        form_data = await request.form()
-        form_dict = {key: value for key, value in form_data.items()}
-        connection, cursor = db
-        
-        user_data = UserCreateRequest(**form_dict)
-
-        cursor.execute(
-            "INSERT INTO users (firstname, lastname, enrollment_number, email, institutional_email, curp, date_of_birth, nationality, password, contact, role_id, degree_id) "
-            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (user_data.firstname, user_data.lastname, user_data.enrollment_number, user_data.email, user_data.institutional_email, user_data.curp, user_data.date_of_birth, user_data.nationality, user_data.password, user_data.contact, 2, user_data.degree_id)
-        )
-        connection.commit()
-        return RedirectResponse(url="/success", status_code=303)
+@router.post("/user/register")
+async def register_user(request: UserRegisterRequest):
+    connection, cursor = get_db()
     
-    except ValidationError as e:
-        cursor.execute("SELECT * FROM university_degrees")
-        degrees = cursor.fetchall()
-                
-        error_messages = format_errors(e.errors(), UserCreateRequest)
-            
-        return templates.TemplateResponse("formulario.html.jinja", {"errors": error_messages, "degrees": degrees})
+    cursor.execute("SELECT * FROM users WHERE enrollment_number = %s OR email = %s", 
+                (request.enrollment_number, request.email))
+    user = cursor.fetchone()
+    if user:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User already exists")
+    
+    cursor.execute(
+        """
+        INSERT INTO users (enrollment_number, firstname, lastname, email, institutional_email, 
+                        password, contact, role_id, curp, date_of_birth, nationality, degree_id)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """,
+        (
+            request.enrollment_number, request.firstname, request.lastname, request.email,
+            request.institutional_email, request.password, request.contact, 2,  # Role ID 2 for 'student'
+            request.curp, request.date_of_birth, request.nationality, request.degree_id
+        )
+    )
+    connection.commit()
+
+    cursor.execute("SELECT * FROM users WHERE enrollment_number = %s", (request.enrollment_number,))
+    new_user = cursor.fetchone()
+    
+    token = encode_token({
+        "user_id": new_user["id"],
+        "enrollment_number": new_user["enrollment_number"],
+        "email": new_user["email"],
+        "role_id": new_user["role_id"]
+    })
+
+    close_db(connection)
+    return {"token": token}
+
+# Código restante de tu archivo FastAPI

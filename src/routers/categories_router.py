@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, Request, Form, UploadFile, File
 from ..dependencies.database import get_db_connection
-from ..models.common import ApiResponse
 from ..models.categories import CategoryRequest, CategoryResponse, CategoryListResponse
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
@@ -28,9 +27,7 @@ async def list_categories(request: Request, db: tuple = Depends(get_db_connectio
         FROM categories
     """)
     categories = cursor.fetchall()
-    print(categories)  # Agregar para depuración
     return templates.TemplateResponse("categories/index.html.jinja", {"request": request, "categories": categories, "current_year": current_year})
-
 
 # Crear categoría (Formulario)
 @router.get("/create", response_class=HTMLResponse)
@@ -61,9 +58,6 @@ async def save_category(request: Request, file: UploadFile = File(...), db: tupl
             # Guardar la ruta de la imagen relativa en la base de datos
             file_location = os.path.relpath(file_location, "src/data/store")
 
-            # Verificar que la imagen se guardó correctamente
-            print(f"Imagen guardada en: {file_location}")
-
         # Insertar datos de la categoría en la base de datos
         cursor.execute("""
             INSERT INTO categories (title, description, image_path)
@@ -81,7 +75,6 @@ async def save_category(request: Request, file: UploadFile = File(...), db: tupl
             "categories/create.html.jinja",
             {"request": request, "errors": error_messages, "current_year": current_year}
         )
-
 
 # Ver detalles de una categoría
 @router.get("/{category_id}", response_class=HTMLResponse)
@@ -122,7 +115,6 @@ async def update_category(
         form_dict = {key: value for key, value in form_data.items()}
         connection, cursor = db
 
-        # Actualizamos el CategoryRequest para no esperar un archivo en image_path
         category_data = CategoryRequest(**form_dict)
 
         # Obtener la ruta actual de la imagen

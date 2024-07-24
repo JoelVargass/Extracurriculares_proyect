@@ -1,6 +1,5 @@
 import os
-from typing import Annotated
-from fastapi import Depends, FastAPI, HTTPException, Request, UploadFile, status
+from fastapi import FastAPI, Depends, HTTPException, Request, UploadFile, status
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -8,6 +7,7 @@ from fastapi.security import OAuth2PasswordBearer
 from fastapi.middleware.cors import CORSMiddleware
 from jose import jwt
 from mysql.connector import connect
+from typing import Annotated
 
 # ROUTERS
 from .src.routers import users_router, clubs_router, categories_router, views_router, login_router, register_router, form_router
@@ -142,3 +142,15 @@ def get_clubs():
     cursor.close()
     connection.close()
     return clubs
+
+@app.middleware("http")
+async def add_user_id_to_request(request: Request, call_next):
+    if "Authorization" in request.headers:
+        token = request.headers["Authorization"].split(" ")[1]
+        payload = decode_token(token)
+        request.state.user_id = payload.get("user_id")
+    else:
+        request.state.user_id = None
+    
+    response = await call_next(request)
+    return response

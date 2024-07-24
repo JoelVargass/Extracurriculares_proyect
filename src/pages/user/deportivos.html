@@ -41,9 +41,8 @@
 <body class="bg-gray-100">
     {% include 'components/navbar.html' %}
     <!-- HEADER-->
-    <main class="relative flex items-center justify-center rounded-xl h-20 my-14 mx-6 sm:mx-4 bg-cover bg-center text-white">
-        <div class="absolute inset-0 bg-white rounded-xl"></div>
-        <h2 class="relative text-[#4aa282] text-4xl font-bold sm:text-2xl z-10">ACTIVIDADES DEPORTIVAS</h2>
+    <main class="relative flex items-center justify-center rounded-xl h-3 my-14 mx-6 sm:mx-4 bg-cover bg-center text-white">
+        <h2 class="relative text-[#4aa282] text-4xl font-bold sm:text-4xl z-10">ACTIVIDADES DEPORTIVAS</h2>
     </main>
     <!-- SECTION -->
     <section class="section flex flex-col sm:flex-row items-start p-8 h-auto bg-white rounded-xl shadow-lg m-4 relative overflow-hidden sm:p-4">
@@ -67,7 +66,7 @@
 
             root.innerHTML = clubs.map(club => `
                 <div class="item">
-                    <button class="titulo-item uppercase text-xl my-4 bg-white border-0 hover:text-[#4aa282] transform hover:scale-105 transition duration-300 cursor-pointer " onclick="viewActivity(${club.id})">${club.club_name}</button>
+                    <button class="titulo-item capitalize text-xl my-4 bg-white border-0 hover:text-[#4aa282] transform hover:scale-105 transition duration-300 cursor-pointer " onclick="viewActivity(${club.id})">${club.club_name}</button>
                 </div>
             `).join('');
 
@@ -101,5 +100,6 @@
 
         document.addEventListener('DOMContentLoaded', renderClubs);
     </script>
+    {% include 'components/footer.html' %}
 </body>
 </html>
