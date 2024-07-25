@@ -113,16 +113,16 @@ async def image_middleware(request: Request, call_next):
     response = await call_next(request)
     return response
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "https://example.com",  # Reemplaza con tu dominio
-        "https://www.example.com"
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=[
+#         "https://example.com",  # Reemplaza con tu dominio
+#         "https://www.example.com"
+#     ],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 def get_db():
     connection = connect(
