@@ -2,6 +2,7 @@ from fastapi import APIRouter, Request, Depends
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from ..dependencies.services import get_user_info
+from icecream import ic
 
 router = APIRouter(
     prefix="/user",
@@ -12,7 +13,10 @@ templates = Jinja2Templates(directory="src/pages/user")
 
 # Rutas para las vistas de usuario
 @router.get("/culturales", response_class=HTMLResponse)
-async def cultural_page(request: Request, user: dict = Depends(get_user_info)):
+async def cultural_page(request: Request, user: dict | None = Depends(get_user_info)):
+
+    ic(user)
+
     return templates.TemplateResponse("culturales.html", {"request": request, "user": user})
 
 @router.get("/deportivos", response_class=HTMLResponse)

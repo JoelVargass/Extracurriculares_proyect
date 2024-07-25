@@ -8,9 +8,6 @@ import logging
 SECRET_KEY = "clave"
 ALGORITHM = "HS256"
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
 def decode_token(token: str) -> dict:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -20,10 +17,12 @@ def decode_token(token: str) -> dict:
 
 
 async def get_user_info(request: Request, db: tuple = Depends(get_db_connection)):
+    ic(request.headers)
+    if "Authorization" not in request.headers:
+        raise None
+    
     token = request.headers["Authorization"].split(" ")[1]
     ic(token)
-    if not token:
-        raise HTTPException(status_code=400, detail='Token is missing')
 
     payload = decode_token(token)
     connection, cursor = db

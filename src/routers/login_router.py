@@ -3,6 +3,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
 from jose import jwt, JWTError
 from ..data.database import get_db, close_db
+from fastapi.responses import RedirectResponse
 
 router = APIRouter()
 
@@ -46,11 +47,16 @@ async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depen
     close_db(connection)
     if not user or form_data.password != user["password"]:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Incorrect username or password")
-    token = encode_token({"username": user["enrollment_number"], "email": user["email"], "role_id": user["role_id"]})
+    token = encode_token({"username": user["enrollment_number"], "email": user["email"], "role_id": user["role_id"], "user_id": user["id"]})
     response.set_cookie(key="access_token", value=token, httponly=True)
     if user["role_id"] == 1:  # Admin
         return {"redirect_url": "/dashboard/users"}
     return {"redirect_url": "/"}
+
+@router.get("/user/logout")
+async def logout(response: Response):
+    response.delete_cookie(key="access_token", domain="http://127.0.0.1", path="/")
+    return RedirectResponse(url="/user/login")
 
 @router.get("/user/profile")
 async def profile(request: Request, my_user: dict = Depends(decode_token)):

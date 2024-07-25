@@ -68,3 +68,7 @@ CREATE TABLE enrollments (
 );
 
 INSERT INTO roles (title) VALUES ('admin'), ('student');
+
+
+INSERT INTO users (enrollment_number, firstname, lastname, email, institutional_email, curp, date_of_birth, nationality, password, contact, role_id, degree_id) VALUES
+('22393127', 'Joel', 'Vargas','jovap723@gmail.com', '23393186@utcancun.edu.mx','VAPJ0XXXXXXXXXXLA8', '2004-09-14', 'Mexicana', 'password', '9982646724', 1, 7);
