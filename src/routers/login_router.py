@@ -58,6 +58,11 @@ async def logout(response: Response):
     response.delete_cookie(key="access_token", domain="http://127.0.0.1", path="/")
     return RedirectResponse(url="/user/login")
 
+@router.post("/user/logout")
+async def logout(response: Response):
+    response.delete_cookie(key="access_token", domain="http://127.0.0.1", path="/")
+    return RedirectResponse(url="/user/login")
+
 @router.get("/user/profile")
 async def profile(request: Request, my_user: dict = Depends(decode_token)):
     return templates.TemplateResponse("home.html", {"request": request, "user": my_user})

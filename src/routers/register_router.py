@@ -6,7 +6,6 @@ from typing import Optional
 from ..data.database import get_db, close_db
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from icecream import ic
 router = APIRouter()
 
 SECRET_KEY = "clave"
@@ -42,7 +41,6 @@ async def register_page(request: Request, db: Depends = Depends(get_db)):
 
     degrees = cursor.fetchall()
     print(degrees)
-    ic(degrees)
 
     return templates.TemplateResponse("register.html.jinja", {"request": request, "degrees": degrees})
 

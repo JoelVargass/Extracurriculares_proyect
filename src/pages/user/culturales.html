@@ -56,30 +56,30 @@
             const clubs = await response.json();
             return clubs.filter(club => club.category_id === 1);
         }
-
+    
         function normalizeImagePath(path) {
             return path.replace(/\\/g, '/');
         }
-
+    
         async function renderClubs() {
             const clubs = await fetchClubs();
             const root = document.getElementById('root');
-
+    
             root.innerHTML = clubs.map(club => `
                 <div class="item">
                     <button class="titulo-item text-xl my-4 bg-white capitalize border-0 hover:text-[#4aa282] transform hover:scale-105 transition duration-300 cursor-pointer" onclick="viewActivity(${club.id})">${club.club_name}</button>
                 </div>
             `).join('');
-
+    
             if (clubs.length > 0) {
                 viewActivity(clubs[0].id);
             }
         }
-
+    
         async function viewActivity(id) {
             const clubs = await fetchClubs();
             const club = clubs.find(club => club.id === id);
-
+    
             document.getElementById('cartItem').innerHTML = `
                 <div class="carrito-titulo text-2xl text-center my-2 text-[#4aa282] uppercase">${club.club_name}</div>
                 ${club.image_path ? `<img src="/static/${normalizeImagePath(club.image_path)}" alt="${club.club_name}" class="w-full max-w-xs h-64 object-cover rounded-2xl sm:w-[20rem] sm:h-[150px]">` : ''}
@@ -94,13 +94,14 @@
                 </div>
             `;
         }
-
+    
         function addToCart(id) {
-            window.location.href = `/user/inscription?club_id=${id}`;
+            window.location.href = `/user/enroll/${id}`;
         }
-
+    
         document.addEventListener('DOMContentLoaded', renderClubs);
     </script>
+    
     {% include 'components/footer.html' %}
 </body>
 </html>

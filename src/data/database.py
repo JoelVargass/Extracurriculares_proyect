@@ -97,5 +97,5 @@ def store_image_file_path(file_path: str):
 initialize_database()
 
 # Ejemplo de cómo almacenar el nombre del archivo
-file_path = "C:/Users/varga/Documents/tilin-crud/src/data/store/static/img/Flores.jpg"
-store_image_file_path(file_path)
+#file_path = "C:/Users/varga/Documents/tilin-crud/src/data/store/static/img/Flores.jpg"
+#store_image_file_path(file_path)

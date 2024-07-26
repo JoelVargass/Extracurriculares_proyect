@@ -22,7 +22,8 @@
 <div class="flex items-center justify-center min-h-screen p-5">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
         <h2 class="text-2xl font-bold mb-4">Formulario de Inscripción a Extracurricular</h2>
-        <form action="/user/inscription" method="post">
+        <form action="/user/enroll/{{ club_id }}" method="post">
+            <input type="hidden" name="club_id" value="{{ club_id }}">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="mb-4">
                     <label for="cuatri" class="block text-sm font-medium text-gray-700">Cuatrimestre</label>
