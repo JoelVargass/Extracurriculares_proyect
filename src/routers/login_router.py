@@ -70,3 +70,4 @@ async def profile(request: Request, my_user: dict = Depends(decode_token)):
 @router.get("/dashboard/users")
 async def dashboard_users(request: Request, my_user: dict = Depends(admin_required)):
     return templates.TemplateResponse("dashboard.html", {"request": request, "user": my_user})
+

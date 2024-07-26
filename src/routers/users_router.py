@@ -40,10 +40,22 @@ def is_valid_email(email):
 async def list_users(request: Request, db: tuple = Depends(get_db_connection)):
     connection, cursor = db
     cursor.execute("""
-        SELECT users.id, users.enrollment_number, users.firstname, users.lastname, 
-            users.email, users.institutional_email, users.curp, users.date_of_birth, 
-            users.nationality, users.contact, roles.title AS role
+        SELECT 
+            users.id, 
+            users.enrollment_number, 
+            users.firstname, 
+            users.lastname, 
+            users.email, 
+            users.institutional_email, 
+            users.curp, 
+            users.date_of_birth, 
+            users.nationality, 
+            users.contact, 
+            roles.title AS role,
+            clubs.club_name AS club_name
         FROM users
+        LEFT JOIN enrollments ON users.id = enrollments.user_id
+        LEFT JOIN clubs ON enrollments.club_id = clubs.id
         JOIN roles ON users.role_id = roles.id
     """)
     users = cursor.fetchall()
@@ -100,26 +112,52 @@ async def save_user(request: Request, db: tuple = Depends(get_db_connection)):
 @router.get("/{user_id}/edit", response_class=HTMLResponse)
 async def edit_user(request: Request, user_id: int, db: tuple = Depends(get_db_connection)):
     connection, cursor = db
-    
-    cursor.execute(
-        "SELECT id, enrollment_number, firstname, lastname, email, institutional_email, curp, date_of_birth, nationality, contact, role_id, club_id, degree_id FROM users WHERE id = %s",
-        (user_id,)
-    )
+
+    # Obtener los detalles del usuario junto con el nombre del club si está inscrito
+    cursor.execute("""
+        SELECT 
+            users.id, 
+            users.enrollment_number, 
+            users.firstname, 
+            users.lastname, 
+            users.email, 
+            users.institutional_email, 
+            users.curp, 
+            users.date_of_birth, 
+            users.nationality, 
+            users.contact, 
+            users.role_id, 
+            users.club_id, 
+            users.degree_id,
+            clubs.club_name AS club_name
+        FROM users
+        LEFT JOIN clubs ON users.club_id = clubs.id
+        WHERE users.id = %s
+    """, (user_id,))
     user = cursor.fetchone()
-        
+
+    # Obtener roles, grados académicos y clubes para los formularios
     cursor.execute("SELECT * FROM roles")
     roles = cursor.fetchall()
-    
+
     cursor.execute("SELECT * FROM university_degrees")
     degrees = cursor.fetchall()
-    
+
     cursor.execute("SELECT * FROM clubs")
     clubs = cursor.fetchall()
-    
+
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    
-    return templates.TemplateResponse("users/edit.html.jinja", {"request": request, "user": user, "roles": roles, "degrees": degrees, "clubs": clubs, "current_year": datetime.now().year})
+
+    # Pasar el usuario y los datos necesarios a la plantilla
+    return templates.TemplateResponse("users/edit.html.jinja", {
+        "request": request,
+        "user": user,
+        "roles": roles,
+        "degrees": degrees,
+        "clubs": clubs,
+        "current_year": datetime.now().year
+    })
 
 # Actualizar usuario
 @router.post("/{user_id}/edit", response_class=HTMLResponse)

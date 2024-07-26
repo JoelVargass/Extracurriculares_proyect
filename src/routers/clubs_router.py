@@ -17,11 +17,18 @@ router = APIRouter(
 templates = Jinja2Templates(directory="src/pages/admin")
 current_year = datetime.now().year
 
+# Listar clubes
 @router.get("", response_class=HTMLResponse)
 async def list_clubs(request: Request, db: tuple = Depends(get_db_connection)):
     connection, cursor = db
-    cursor.execute("SELECT * FROM clubs")
-    clubs = cursor.fetchall() 
+    cursor.execute("""
+        SELECT clubs.id, clubs.club_name, clubs.description, clubs.location, clubs.init_hour, clubs.finish_hour, 
+        clubs.quota, clubs.teacher_name, clubs.teacher_email, categories.title AS category
+        FROM clubs
+        JOIN categories ON clubs.category_id = categories.id
+    """)
+    clubs = cursor.fetchall()
+    
     return templates.TemplateResponse("clubs/index.html.jinja", {"request": request, "clubs": clubs, "current_year": current_year})
 
 @router.get("/create", response_class=HTMLResponse)

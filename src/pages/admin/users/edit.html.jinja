@@ -66,14 +66,6 @@
             </select>
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="club_id">Club</label>
-            <select name="club_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                {% for club in clubs %}
-                    <option value="{{ club.id }}" {% if user.club_id == club.id %}selected{% endif %}>{{ club.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="degree_id">Grado Académico</label>
             <select name="degree_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 {% for degree in degrees %}

@@ -24,26 +24,25 @@
                 </svg>
                 <span class="ml-2 font-bold">Soporte</span>
             </a>
-            <a href="/user/login" class="flex items-center text-[#4aa282] text-lg font-semibold transition-colors duration-300 hover:text-green-700">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle hover:stroke-green-500" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="#4aa282" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                    <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                    <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
-                </svg>
-                {% if user %}
-                    <div class="flex gap-5 items-center">
-                        <p class="ml-2 font-bold">Bienvenido, {{ user.firstname }}!</p>
-                        <form action="/user/logout" method="GET">
-                            <button type="submit" class="text-white bg-[#4aa282] rounded-md font-bold text-md px-5 py-1">
-                                Cerrar Sesion
-                            </button>
+            <div class="text-left">
+                <div>
+                    <button type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-xl font-bold text-[#4aa282] ring-inset ring-gray-300 hover:bg-gray-50 capitalize" id="profile-menu-button" aria-expanded="true" aria-haspopup="true">
+                        Bienvenid@, {{ user.firstname }}!
+                        <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" id="profile-menu" role="menu" aria-orientation="vertical" aria-labelledby="profile-menu-button" tabindex="-1">
+                    <div class="py-1" role="none">
+                        <a href="/user/info" class="block px-4 py-2 text-bold text-gray-600 hover:bg-gray-100" role="menuitem" tabindex="-1" id="menu-item-0">Información del Perfil</a>
+                        <form method="GET" action="/user/logout" role="none">
+                            <button type="submit" class="block w-full px-4 py-2 text-left text-bold text-gray-600 hover:bg-gray-100" role="menuitem" tabindex="-1" id="menu-item-1">Cerrar Sesión</button>
                         </form>
                     </div>
-                {% else %}
-                    <span class="ml-2 font-bold">Ingresar</span>
-                {% endif %}
-            </a>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
@@ -52,10 +51,8 @@
     document.getElementById('menu-button').addEventListener('click', function() {
         document.getElementById('menu').classList.toggle('hidden');
     });
-</script>
 
-<style>
-    .hover\:stroke:hover {
-        stroke: #4aa282;
-    }
-</style>
+    document.getElementById('profile-menu-button').addEventListener('click', function() {
+        document.getElementById('profile-menu').classList.toggle('hidden');
+    });
+</script>
